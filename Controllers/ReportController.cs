@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,76 +11,107 @@ namespace Trash_Track.Controllers
     public class ReportController : Controller
     {
         private readonly TrashDBContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public ReportController(TrashDBContext context)
+
+        public ReportController(TrashDBContext context,UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            // Build the ward dropdown list
-            var wards = _context.Wards.OrderBy(w => w.No).ToList();
-            var wardList = wards.Select(w => new SelectListItem
+            var userId = _userManager.GetUserId(User);
+            var user = await _context.ApplicationUsers.FirstOrDefaultAsync(u => u.Id == userId);
+
+            int wardId = 0;
+            string wardDisplay = "Unknown";
+
+            if (user != null)
             {
-                Value = w.Id.ToString(),
-                Text = $"Ward {w.No} - {w.Name}"
-            }).ToList();
-
-            ViewBag.Wards = wardList;
-            return View();
-        }
-
-        // POST: Report/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Report report, IFormFile? photo)
-        {
-            // Prevent EF validation of navigation property
-            ModelState.Remove("Ward");
-
-            if (ModelState.IsValid)
-            {
-                // Handle optional photo upload
-                if (photo != null)
+                
+                var matchedWard = await _context.Wards.FirstOrDefaultAsync(w => w.No == user.WardNumber);
+                if (matchedWard != null)
                 {
-                    var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
-                    if (!Directory.Exists(uploadsDir))
-                        Directory.CreateDirectory(uploadsDir);
-
-                    var fileName = Guid.NewGuid() + Path.GetExtension(photo.FileName);
-                    var filePath = Path.Combine(uploadsDir, fileName);
-
-                    using var stream = new FileStream(filePath, FileMode.Create);
-                    await photo.CopyToAsync(stream);
-
-                    report.PhotoPath = "/uploads/" + fileName;
+                    wardId = matchedWard.Id;
+                    wardDisplay = $"Ward {matchedWard.No} - {matchedWard.Name}";
                 }
-
-                report.Status = "Pending";
-                report.CreatedAt = DateTime.Now;
-
-                _context.Reports.Add(report);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
 
-            // Rebuild the ward dropdown if validation fails
-            var wards = _context.Wards.OrderBy(w => w.No).ToList();
-            var wardList = wards.Select(w => new SelectListItem
+            var viewModel = new ReportFormViewModel
             {
-                Value = w.Id.ToString(),
-                Text = $"Ward {w.No} - {w.Name}",
-                Selected = w.Id == report.WardId
-            }).ToList();
+                ReporterName = user?.FullName ?? user?.UserName ?? "Unknown",
+                WardId = wardId
+            };
 
-            ViewBag.Wards = wardList;
+            ViewBag.WardDisplay = wardDisplay;
 
-            return View(report);
+            ViewBag.Wards = await _context.Wards
+                .OrderBy(w => w.No)
+                .Select(w => new SelectListItem
+                {
+                    Value = w.Id.ToString(),
+                    Text = $"Ward {w.No} - {w.Name}"
+                })
+                .ToListAsync();
+
+            return View(viewModel);
         }
 
 
-        // GET: Report
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(ReportFormViewModel vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Wards = _context.Wards.OrderBy(w => w.No).Select(w => new SelectListItem
+                {
+                    Value = w.Id.ToString(),
+                    Text = $"Ward {w.No} - {w.Name}",
+                    Selected = w.Id == vm.WardId
+                }).ToList();
+
+                return View(vm);
+            }
+
+            var report = new Report
+            {
+                ReporterName = vm.ReporterName,
+                WardId = vm.WardId,
+                Description = vm.Description,
+                Status = "Pending",
+                CreatedAt = DateTime.Now
+            };
+
+            
+            if (vm.Photo != null)
+            {
+                var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
+                if (!Directory.Exists(uploadsDir))
+                    Directory.CreateDirectory(uploadsDir);
+
+                var fileName = Guid.NewGuid() + Path.GetExtension(vm.Photo.FileName);
+                var filePath = Path.Combine(uploadsDir, fileName);
+
+                using var stream = new FileStream(filePath, FileMode.Create);
+                await vm.Photo.CopyToAsync(stream);
+
+                report.PhotoPath = "/uploads/" + fileName;
+            }
+
+            _context.Reports.Add(report);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
+
         public async Task<IActionResult> Index()
         {
             var reports = await _context.Reports
@@ -98,7 +130,7 @@ namespace Trash_Track.Controllers
                 return NotFound();
             }
 
-            // Build ward dropdown
+
             var wardList = _context.Wards.OrderBy(w => w.No)
                 .Select(w => new SelectListItem
                 {
@@ -111,7 +143,7 @@ namespace Trash_Track.Controllers
             return View(report);
         }
 
-        // POST: Report/Edit/5
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Report report, IFormFile? newPhoto)
@@ -176,7 +208,7 @@ namespace Trash_Track.Controllers
             }
         }
 
-        // GET: Report/Delete/5
+        
         public async Task<IActionResult> Delete(int id)
         {
             var report = await _context.Reports
@@ -189,9 +221,9 @@ namespace Trash_Track.Controllers
                 return NotFound();
             }
 
-            return View(report); // Will create Delete.cshtml for confirmation
+            return View(report); 
         }
-        // POST: Report/Delete/5
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -202,7 +234,6 @@ namespace Trash_Track.Controllers
                 return NotFound();
             }
 
-            // Optional: Delete photo from server
             if (!string.IsNullOrEmpty(report.PhotoPath))
             {
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", report.PhotoPath.TrimStart('/'));
