@@ -12,8 +12,8 @@ using Trash_Track.Models;
 namespace Trash_Track.Migrations
 {
     [DbContext(typeof(TrashDBContext))]
-    [Migration("20250618084617_wardchanges")]
-    partial class wardchanges
+    [Migration("20250623024309_pickupchanges")]
+    partial class pickupchanges
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -298,6 +298,9 @@ namespace Trash_Track.Migrations
 
                     b.Property<bool>("IsCancelled")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<TimeSpan?>("NewTime")
                         .HasColumnType("time");
@@ -615,6 +618,10 @@ namespace Trash_Track.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("No")
                         .HasColumnType("int");
 
@@ -626,161 +633,193 @@ namespace Trash_Track.Migrations
                         new
                         {
                             Id = 1,
+                            Name = "Dilli Bazaar",
                             No = 1
                         },
                         new
                         {
                             Id = 2,
+                            Name = "Maitidevi",
                             No = 2
                         },
                         new
                         {
                             Id = 3,
+                            Name = "Gaushala",
                             No = 3
                         },
                         new
                         {
                             Id = 4,
+                            Name = "Gyaneshwor",
                             No = 4
                         },
                         new
                         {
                             Id = 5,
+                            Name = "Baneshwor",
                             No = 5
                         },
                         new
                         {
                             Id = 6,
+                            Name = "Tinkune",
                             No = 6
                         },
                         new
                         {
                             Id = 7,
+                            Name = "Sinamangal",
                             No = 7
                         },
                         new
                         {
                             Id = 8,
+                            Name = "Tilganga",
                             No = 8
                         },
                         new
                         {
                             Id = 9,
+                            Name = "Old Baneshwor",
                             No = 9
                         },
                         new
                         {
                             Id = 10,
+                            Name = "New Baneshwor",
                             No = 10
                         },
                         new
                         {
                             Id = 11,
+                            Name = "Minbhawan",
                             No = 11
                         },
                         new
                         {
                             Id = 12,
+                            Name = "Shantinagar",
                             No = 12
                         },
                         new
                         {
                             Id = 13,
+                            Name = "Anamnagar",
                             No = 13
                         },
                         new
                         {
                             Id = 14,
+                            Name = "Babarmahal",
                             No = 14
                         },
                         new
                         {
                             Id = 15,
+                            Name = "Tripureshwor",
                             No = 15
                         },
                         new
                         {
                             Id = 16,
+                            Name = "Thapathali",
                             No = 16
                         },
                         new
                         {
                             Id = 17,
+                            Name = "Teku",
                             No = 17
                         },
                         new
                         {
                             Id = 18,
+                            Name = "Kalimati",
                             No = 18
                         },
                         new
                         {
                             Id = 19,
+                            Name = "Balkhu",
                             No = 19
                         },
                         new
                         {
                             Id = 20,
+                            Name = "Kuleshwor",
                             No = 20
                         },
                         new
                         {
                             Id = 21,
+                            Name = "Chhetrapati",
                             No = 21
                         },
                         new
                         {
                             Id = 22,
+                            Name = "Indra Chowk",
                             No = 22
                         },
                         new
                         {
                             Id = 23,
+                            Name = "Ason",
                             No = 23
                         },
                         new
                         {
                             Id = 24,
+                            Name = "Basantapur",
                             No = 24
                         },
                         new
                         {
                             Id = 25,
+                            Name = "Thamel",
                             No = 25
                         },
                         new
                         {
                             Id = 26,
+                            Name = "Lazimpat",
                             No = 26
                         },
                         new
                         {
                             Id = 27,
+                            Name = "Maharajgunj",
                             No = 27
                         },
                         new
                         {
                             Id = 28,
+                            Name = "Baluwatar",
                             No = 28
                         },
                         new
                         {
                             Id = 29,
+                            Name = "Budhanilkantha",
                             No = 29
                         },
                         new
                         {
                             Id = 30,
+                            Name = "Gongabu",
                             No = 30
                         },
                         new
                         {
                             Id = 31,
+                            Name = "Tokha",
                             No = 31
                         },
                         new
                         {
                             Id = 32,
+                            Name = "Samakhusi",
                             No = 32
                         });
                 });

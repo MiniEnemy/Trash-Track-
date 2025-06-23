@@ -21,17 +21,27 @@ namespace Trash_Track.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            // Seed 32 wards
+            var wardNames = new[]
+  {
+    "Dilli Bazaar", "Maitidevi", "Gaushala", "Gyaneshwor", "Baneshwor", "Tinkune", "Sinamangal", "Tilganga",
+    "Old Baneshwor", "New Baneshwor", "Minbhawan", "Shantinagar", "Anamnagar", "Babarmahal", "Tripureshwor", "Thapathali",
+    "Teku", "Kalimati", "Balkhu", "Kuleshwor", "Chhetrapati", "Indra Chowk", "Ason", "Basantapur",
+    "Thamel", "Lazimpat", "Maharajgunj", "Baluwatar", "Budhanilkantha", "Gongabu", "Tokha", "Samakhusi"
+};
+
             var wards = new List<Ward>();
-            for (int i = 1; i <= 32; i++)
+            for (int i = 0; i < 32; i++)
             {
                 wards.Add(new Ward
                 {
-                    Id = i,
-                    No = i
+                    Id = i + 1,
+                    No = i + 1,
+                    Name = wardNames[i]
                 });
             }
+
             modelBuilder.Entity<Ward>().HasData(wards);
+
 
             // Seed 5 drivers
             var drivers = new List<Driver>
