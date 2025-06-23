@@ -1,8 +1,131 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿<section class="hero-section pt-8 pb-6 text-white">
+    <div class="container pt-8 pb-6">
+        <div class="row justify-content-center text-center py-5">
+            <div class="col-lg-10 py-5">
+                <h1 class="display-4 fw-bold mb-4">Transforming Waste Management in <span class="text-kathmandu">Kathmandu</span></h1>
+                <p class="lead mb-5">Track collection schedules, report issues, and contribute to a cleaner Kathmandu through our community-powered platform.</p>
+                <div class="d-flex justify-content-center flex-wrap gap-3">
+                    <button class="btn btn-accent btn-lg px-4 py-3 fw-bold" data-bs-toggle="modal" data-bs-target="#authModal">
+                        <i class="bi bi-arrow-right-circle me-2"></i>Get Started
+                    </button>
+                    <a href="#schedule" class="btn btn-outline-light btn-lg px-4 py-3">
+                        <i class="bi bi-calendar-event me-2"></i>View Schedules
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="features" class="py-6 bg-white mt-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold text-primary">TrashTrack Features</h2>
+            <p class="lead">Designed to solve Kathmandu's waste management challenges</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="eco-card h-100">
+                    <div class="p-4 text-center">
+                        <div class="feature-icon mx-auto">
+                            <i class="bi bi-calendar-check"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Ward Schedules</h5>
+                        <p class="mb-0">View accurate garbage pickup schedules for all 32 wards of Kathmandu.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="eco-card h-100">
+                    <div class="p-4 text-center">
+                        <div class="feature-icon mx-auto">
+                            <i class="bi bi-megaphone"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Missed Pickup Reports</h5>
+                        <p class="mb-0">Report missed collections with photo evidence and location details.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="eco-card h-100">
+                    <div class="p-4 text-center">
+                        <div class="feature-icon mx-auto">
+                            <i class="bi bi-clipboard-check"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Report Tracking</h5>
+                        <p class="mb-0">Monitor the status of your reports from submission to resolution.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="eco-card h-100">
+                    <div class="p-4 text-center">
+                        <div class="feature-icon mx-auto">
+                            <i class="bi bi-speedometer"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Admin Dashboard</h5>
+                        <p class="mb-0">Municipal staff can manage schedules and reports efficiently.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-6 bg-light mt-4">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold text-kathmandu">Making a Difference</h2>
+            <p class="lead">How TrashTrack is improving Kathmandu's waste management</p>
+        </div>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="impact-card impact-1">
+                    <div class="impact-header">
+                        <i class="bi bi-shield-check impact-icon"></i>
+                        <h3>Healthier Environment</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Reducing uncollected waste decreases health risks and creates cleaner neighborhoods for everyone.</p>
+                        <div class="impact-visual">
+                            <i class="bi bi-tree-fill text-primary" style="font-size: 4rem;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="impact-card impact-2">
+                    <div class="impact-header">
+                        <i class="bi bi-people-fill impact-icon"></i>
+                        <h3>Community Engagement</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Empowering residents to take an active role in keeping their communities clean and sustainable.</p>
+                        <div class="impact-visual">
+                            <i class="bi bi-people-fill text-kathmandu" style="font-size: 4rem;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="impact-card impact-3">
+                    <div class="impact-header">
+                        <i class="bi bi-graph-up impact-icon"></i>
+                        <h3>Efficient Services</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Municipal authorities can optimize routes and resources based on real-time data and reports.</p>
+                        <div class="impact-visual">
+                            <i class="bi bi-bar-chart-line-fill text-accent" style="font-size: 4rem;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+

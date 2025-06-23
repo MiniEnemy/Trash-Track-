@@ -21,3 +21,6 @@ packages/
 *.cache
 *.tmp
 # Rider settings
+/Migrations/TrashDBContextModelSnapshot.cs
+/Migrations/20250623024403_coded.cs
+/appsettings.json

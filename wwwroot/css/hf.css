@@ -1,0 +1,513 @@
+﻿:root {
+    --primary: #2e7d32; /* Deep green */
+    --secondary: #388e3c; /* Medium green */
+    --accent: #ff8f00; /* Orange for CTAs */
+    --light: #f1f8e9; /* Light green tint */
+    --dark: #1b5e20; /* Dark green */
+    --kathmandu: #8d6e63; /* Kathmandu-inspired color */
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--light);
+    color: #333;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="100" viewBox="0 0 100 100"><path fill="%232e7d32" fill-opacity="0.03" d="M20,20 Q40,5 50,30 T80,20 Q95,40 80,60 T50,80 Q40,95 20,80 Q5,60 20,40Z"/></svg>');
+    background-size: 120px;
+}
+
+.nav-item button {
+    color: black;
+}
+
+h5 {
+    color: black;
+}
+
+h1, h2, h3, h4, h5, .brand {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+.bg-primary {
+    background-color: var(--primary) !important;
+}
+
+.bg-kathmandu {
+    background-color: var(--kathmandu) !important;
+}
+
+.bg-accent {
+    background-color: var(--accent) !important;
+}
+
+.text-primary {
+    color: var(--primary) !important;
+}
+
+.text-kathmandu {
+    color: var(--kathmandu) !important;
+}
+
+.text-accent {
+    color: var(--accent) !important;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+    .btn-primary:hover {
+        background-color: var(--dark);
+        border-color: var(--dark);
+    }
+
+.btn-accent {
+    background-color: var(--accent);
+    color: white;
+    border: none;
+}
+
+    .btn-accent:hover {
+        background-color: #e65100;
+        color: white;
+    }
+
+.btn-kathmandu {
+    background-color: var(--kathmandu);
+    color: white;
+    border: none;
+}
+
+    .btn-kathmandu:hover {
+        background-color: #6d4c41;
+        color: white;
+    }
+
+.eco-card {
+    transition: all 0.3s ease;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    background: white;
+    border: none;
+}
+
+    .eco-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+.eco-card-header {
+    background: linear-gradient(135deg, var(--primary), var(--kathmandu));
+    color: white;
+    padding: 1.5rem;
+}
+
+.schedule-item {
+    border-left: 4px solid var(--kathmandu);
+    padding-left: 1rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+    .schedule-item:hover {
+        transform: translateX(5px);
+        border-left-width: 6px;
+    }
+
+.nav-link {
+    position: relative;
+    color: rgba(255, 255, 255, 0.85) !important;
+    transition: all 0.3s ease;
+}
+
+    .nav-link:hover, .nav-link.active {
+        color: white !important;
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 3px;
+        background-color: white;
+        transition: width 0.3s ease;
+        border-radius: 3px;
+    }
+
+    .nav-link:hover::after, .nav-link.active::after {
+        width: 100%;
+    }
+
+.hero-section {
+    background: linear-gradient(135deg, rgba(46, 125, 50, 0.9), rgba(141, 110, 99, 0.9)), url('https://images.unsplash.com/photo-1593696140826-c58b021acf8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+    background-size: cover;
+    background-position: center;
+    border-radius: 0 0 40px 40px;
+    overflow: hidden;
+    position: relative;
+}
+
+.feature-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: rgba(46, 125, 50, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+    .feature-icon i {
+        font-size: 2rem;
+        color: var(--primary);
+    }
+
+.kathmandu-map {
+    position: relative;
+    height: 300px;
+    background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Kathmandu_Metropolitan_City_ward_Map.png/1200px-Kathmandu_Metropolitan_City_ward_Map.png');
+    background-size: cover;
+    background-position: center;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.map-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(27, 94, 32, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+}
+
+.stats-card {
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    height: 100%;
+}
+
+    .stats-card .card-body {
+        position: relative;
+        z-index: 2;
+    }
+
+    .stats-card::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.85);
+        z-index: -1;
+    }
+
+.flow-section {
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%23f1f8e9" width="100" height="100"/><path fill="%232e7d32" opacity="0.1" d="M20,20 Q40,5 50,30 T80,20 Q95,40 80,60 T50,80 Q40,95 20,80 Q5,60 20,40Z"/></svg>');
+    background-size: 120px;
+}
+
+.flow-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    padding: 20px;
+}
+
+    .flow-step:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: -30px;
+        width: 30px;
+        height: 2px;
+        background: var(--kathmandu);
+    }
+
+.step-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: var(--kathmandu);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.report-status {
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.status-pending {
+    background: rgba(255, 193, 7, 0.2);
+    color: #ff9800;
+}
+
+.status-resolved {
+    background: rgba(76, 175, 80, 0.2);
+    color: #4caf50;
+}
+
+.status-ignored {
+    background: rgba(244, 67, 54, 0.2);
+    color: #f44336;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary);
+}
+
+.impact-card {
+    border-radius: 16px;
+    overflow: hidden;
+    height: 100%;
+    background: white;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+    .impact-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+.impact-header {
+    padding: 1.5rem;
+    color: white;
+    text-align: center;
+}
+
+.impact-1 .impact-header {
+    background: linear-gradient(135deg, var(--primary), var(--dark));
+}
+
+.impact-2 .impact-header {
+    background: linear-gradient(135deg, var(--kathmandu), #6d4c41);
+}
+
+.impact-3 .impact-header {
+    background: linear-gradient(135deg, var(--accent), #e65100);
+}
+
+.impact-card .card-body {
+    padding: 1.5rem;
+}
+
+.impact-card h3 {
+    font-weight: 700;
+}
+
+.impact-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.impact-1 .impact-icon {
+    color: var(--primary);
+}
+
+.impact-2 .impact-icon {
+    color: var(--kathmandu);
+}
+
+.impact-3 .impact-icon {
+    color: var(--accent);
+}
+
+.auth-modal .modal-header {
+    background: linear-gradient(135deg, var(--primary), var(--kathmandu));
+    color: white;
+    border-bottom: none;
+}
+
+.auth-modal .modal-body {
+    padding: 2rem;
+}
+
+.auth-modal .nav-tabs .nav-link {
+    color: var(--dark);
+    border: none;
+    border-radius: 0;
+    padding: 1rem 1.5rem;
+    font-weight: 600;
+}
+
+    .auth-modal .nav-tabs .nav-link.active {
+        color: var(--primary);
+        border-bottom: 3px solid var(--primary);
+        background: transparent;
+    }
+
+.auth-modal .form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.25rem rgba(46, 125, 50, 0.25);
+}
+
+.auth-modal .btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    padding: 0.75rem;
+    font-weight: 600;
+}
+
+    .auth-modal .btn-primary:hover {
+        background-color: var(--dark);
+        border-color: var(--dark);
+    }
+
+.auth-modal .social-login .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .auth-modal .social-login .btn i {
+        margin-right: 0.5rem;
+    }
+
+.auth-modal .divider {
+    position: relative;
+    text-align: center;
+    margin: 1.5rem 0;
+}
+
+    .auth-modal .divider::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: #dee2e6;
+        z-index: 1;
+    }
+
+    .auth-modal .divider span {
+        position: relative;
+        z-index: 2;
+        background: white;
+        padding: 0 1rem;
+        color: #6c757d;
+    }
+
+.impact-visual {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1.5rem 0;
+}
+
+    .impact-visual img {
+        max-height: 100%;
+        max-width: 100%;
+    }
+
+.user-role {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--accent);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.hero-impact-card .card-body {
+    color: #333 !important;
+}
+
+    .hero-impact-card .card-body h5 {
+        color: var(--dark) !important;
+        font-weight: 600;
+    }
+
+.hero-impact-card .btn-outline-primary {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+    .hero-impact-card .btn-outline-primary:hover {
+        background-color: var(--primary);
+        color: white;
+    }
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.reports-section {
+    display: none;
+}
+
+.login-reminder {
+    display: block;
+    background: linear-gradient(135deg, rgba(46, 125, 50, 0.1), rgba(141, 110, 99, 0.1));
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+}
+
+    .login-reminder i {
+        font-size: 3rem;
+        color: var(--primary);
+        margin-bottom: 1rem;
+    }
+
+@media (max-width: 768px) {
+    .flow-step:not(:last-child)::after {
+        display: none;
+    }
+
+    .flow-step {
+        margin-bottom: 30px;
+    }
+
+    .hero-section {
+        border-radius: 0 0 20px 20px;
+    }
+
+    .kathmandu-map {
+        height: 200px;
+        margin-bottom: 20px;
+    }
+}
