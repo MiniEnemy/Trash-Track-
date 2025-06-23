@@ -12,7 +12,7 @@ using Trash_Track.Models;
 namespace Trash_Track.Migrations
 {
     [DbContext(typeof(TrashDBContext))]
-    [Migration("20250623080413_pickupchanges")]
+    [Migration("20250623085635_pickupchanges")]
     partial class pickupchanges
     {
         /// <inheritdoc />
