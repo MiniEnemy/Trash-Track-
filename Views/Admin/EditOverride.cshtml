@@ -1,12 +1,10 @@
 ﻿@model Trash_Track.Models.PickupOverride
 @{
-    ViewData["Title"] = "Create Pickup Override";
+    ViewData["Title"] = "Edit Pickup Override";
 }
+<h2>Edit Pickup Override</h2>
 
-<div asp-validation-summary="All" class="text-danger"></div>
-<h2>@ViewData["Title"]</h2>
-
-<form asp-action="CreateOverride" method="post">
+<form asp-action="EditOverride" method="post">
     <div class="mb-3">
         <label asp-for="WardId" class="form-label"></label>
         <select asp-for="WardId" asp-items="ViewBag.Wards" class="form-select">
@@ -53,7 +51,7 @@
     </div>
 
 
-    <button type="submit" class="btn btn-primary">Create Override</button>
+    <button type="submit" class="btn btn-primary">Update</button>
     <a asp-action="Overrides" class="btn btn-secondary">Cancel</a>
 </form>
 

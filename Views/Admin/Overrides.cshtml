@@ -14,6 +14,7 @@
             <th>New Time</th>
             <th>Cancelled?</th>
             <th>Message</th>
+            <th>Drivers</th>
         </tr>
     </thead>
     <tbody>
@@ -37,7 +38,16 @@
             }
         </td>
         <td>@item.Message</td>
-    </tr>
+        <td>@(item.Driver != null ? item.Driver.Name : "Not Assigned")</td>
+            </tr>
+        <td>
+            <a asp-action="EditOverride" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
+
+            <a asp-action="DeleteOverride" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+
+        </td>
 }
+
+
     </tbody>
 </table>
