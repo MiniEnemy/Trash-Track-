@@ -19,7 +19,6 @@ namespace Trash_Track.Controllers
             _context = context;
             _userManager = userManager;
         }
-        // GET: /User/
         public async Task<IActionResult> Index()
         {
             var userId = _userManager.GetUserId(User);
@@ -49,12 +48,11 @@ namespace Trash_Track.Controllers
             var user = await _userManager.FindByIdAsync(id);
             if (user != null)
             {
-                user.LockoutEnd = DateTime.UtcNow.AddYears(100); // Effectively permanent lock
+                user.LockoutEnd = DateTime.UtcNow.AddYears(100); 
                 await _userManager.UpdateAsync(user);
             }
             return RedirectToAction("Index");
         }
-        // POST: /User/Unlock
         [HttpPost]
         public async Task<IActionResult> Unlock(string id)
         {
