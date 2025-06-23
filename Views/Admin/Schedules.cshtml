@@ -1,0 +1,56 @@
+﻿@model List<Trash_Track.Models.PickupSchedule>
+@{
+    ViewData["Title"] = "Manage Pickup Schedules";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ward No</th>
+            <th>Pickup Day</th>
+            <th>Pickup Time</th>
+            <th>Driver</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <form asp-action="UpdateSchedule" method="post">
+                    <input type="hidden" name="scheduleId" value="@item.Id" />
+                <td>Ward @item.Ward.No</td>
+                <td>
+                    <select name="day" class="form-select">
+                            @foreach (DayOfWeek day in Enum.GetValues(typeof(DayOfWeek)))
+                            {
+                            <option value="@day" selected="@(item.PickupDay == day ? "selected" : null)">
+                                    @day
+                            </option>
+                            }
+                    </select>
+                </td>
+                <td>
+                    <input name="time" type="time" class="form-control" value="@item.PickupTime.ToString(@"hh\:mm")" />
+                </td>
+                <td>
+                    <select name="driverId" class="form-select">
+                            @foreach (var driver in ViewBag.Drivers as SelectList)
+                            {
+                            <option value="@driver.Value" selected="@(driver.Value == item.DriverId?.ToString() ? "selected" : null)">
+                                    @driver.Text
+                            </option>
+                            }
+                    </select>
+                </td>
+
+                <td>
+                    <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                </td>
+                </form>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -22,7 +22,7 @@ namespace Trash_Track.Models
             base.OnModelCreating(modelBuilder);
 
             var wardNames = new[]
- {
+  {
     "Dilli Bazaar", "Maitidevi", "Gaushala", "Gyaneshwor", "Baneshwor", "Tinkune", "Sinamangal", "Tilganga",
     "Old Baneshwor", "New Baneshwor", "Minbhawan", "Shantinagar", "Anamnagar", "Babarmahal", "Tripureshwor", "Thapathali",
     "Teku", "Kalimati", "Balkhu", "Kuleshwor", "Chhetrapati", "Indra Chowk", "Ason", "Basantapur",
@@ -41,6 +41,7 @@ namespace Trash_Track.Models
             }
 
             modelBuilder.Entity<Ward>().HasData(wards);
+
 
             // Seed 5 drivers
             var drivers = new List<Driver>
