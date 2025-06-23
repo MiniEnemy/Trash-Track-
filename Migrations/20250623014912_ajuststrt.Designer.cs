@@ -12,8 +12,8 @@ using Trash_Track.Models;
 namespace Trash_Track.Migrations
 {
     [DbContext(typeof(TrashDBContext))]
-    [Migration("20250618075038_identityadded")]
-    partial class identityadded
+    [Migration("20250623014912_ajuststrt")]
+    partial class ajuststrt
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -179,12 +179,10 @@ namespace Trash_Track.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -221,12 +219,10 @@ namespace Trash_Track.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -255,6 +251,38 @@ namespace Trash_Track.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Drivers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Contact = "9801000001",
+                            Name = "Ram Bahadur"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Contact = "9801000002",
+                            Name = "Shyam Lal"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Contact = "9801000003",
+                            Name = "Sita Thapa"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Contact = "9801000004",
+                            Name = "Gopal Basnet"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Contact = "9801000005",
+                            Name = "Nisha Shrestha"
+                        });
                 });
 
             modelBuilder.Entity("Trash_Track.Models.PickupOverride", b =>
@@ -310,6 +338,232 @@ namespace Trash_Track.Migrations
                         .IsUnique();
 
                     b.ToTable("PickupSchedules");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            PickupDay = 0,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            PickupDay = 1,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            PickupDay = 2,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            PickupDay = 3,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            PickupDay = 4,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 5
+                        },
+                        new
+                        {
+                            Id = 6,
+                            PickupDay = 5,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 6
+                        },
+                        new
+                        {
+                            Id = 7,
+                            PickupDay = 6,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 7
+                        },
+                        new
+                        {
+                            Id = 8,
+                            PickupDay = 0,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 8
+                        },
+                        new
+                        {
+                            Id = 9,
+                            PickupDay = 1,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 9
+                        },
+                        new
+                        {
+                            Id = 10,
+                            PickupDay = 2,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 10
+                        },
+                        new
+                        {
+                            Id = 11,
+                            PickupDay = 3,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 11
+                        },
+                        new
+                        {
+                            Id = 12,
+                            PickupDay = 4,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 12
+                        },
+                        new
+                        {
+                            Id = 13,
+                            PickupDay = 5,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 13
+                        },
+                        new
+                        {
+                            Id = 14,
+                            PickupDay = 6,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 14
+                        },
+                        new
+                        {
+                            Id = 15,
+                            PickupDay = 0,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 15
+                        },
+                        new
+                        {
+                            Id = 16,
+                            PickupDay = 1,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 16
+                        },
+                        new
+                        {
+                            Id = 17,
+                            PickupDay = 2,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 17
+                        },
+                        new
+                        {
+                            Id = 18,
+                            PickupDay = 3,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 18
+                        },
+                        new
+                        {
+                            Id = 19,
+                            PickupDay = 4,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 19
+                        },
+                        new
+                        {
+                            Id = 20,
+                            PickupDay = 5,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 20
+                        },
+                        new
+                        {
+                            Id = 21,
+                            PickupDay = 6,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 21
+                        },
+                        new
+                        {
+                            Id = 22,
+                            PickupDay = 0,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 22
+                        },
+                        new
+                        {
+                            Id = 23,
+                            PickupDay = 1,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 23
+                        },
+                        new
+                        {
+                            Id = 24,
+                            PickupDay = 2,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 24
+                        },
+                        new
+                        {
+                            Id = 25,
+                            PickupDay = 3,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 25
+                        },
+                        new
+                        {
+                            Id = 26,
+                            PickupDay = 4,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 26
+                        },
+                        new
+                        {
+                            Id = 27,
+                            PickupDay = 5,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 27
+                        },
+                        new
+                        {
+                            Id = 28,
+                            PickupDay = 6,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 28
+                        },
+                        new
+                        {
+                            Id = 29,
+                            PickupDay = 0,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 29
+                        },
+                        new
+                        {
+                            Id = 30,
+                            PickupDay = 1,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 30
+                        },
+                        new
+                        {
+                            Id = 31,
+                            PickupDay = 2,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 31
+                        },
+                        new
+                        {
+                            Id = 32,
+                            PickupDay = 3,
+                            PickupTime = new TimeSpan(0, 6, 0, 0, 0),
+                            WardId = 32
+                        });
                 });
 
             modelBuilder.Entity("Trash_Track.Models.Report", b =>
@@ -361,13 +615,174 @@ namespace Trash_Track.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("No")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.ToTable("Wards");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            No = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            No = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            No = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            No = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            No = 5
+                        },
+                        new
+                        {
+                            Id = 6,
+                            No = 6
+                        },
+                        new
+                        {
+                            Id = 7,
+                            No = 7
+                        },
+                        new
+                        {
+                            Id = 8,
+                            No = 8
+                        },
+                        new
+                        {
+                            Id = 9,
+                            No = 9
+                        },
+                        new
+                        {
+                            Id = 10,
+                            No = 10
+                        },
+                        new
+                        {
+                            Id = 11,
+                            No = 11
+                        },
+                        new
+                        {
+                            Id = 12,
+                            No = 12
+                        },
+                        new
+                        {
+                            Id = 13,
+                            No = 13
+                        },
+                        new
+                        {
+                            Id = 14,
+                            No = 14
+                        },
+                        new
+                        {
+                            Id = 15,
+                            No = 15
+                        },
+                        new
+                        {
+                            Id = 16,
+                            No = 16
+                        },
+                        new
+                        {
+                            Id = 17,
+                            No = 17
+                        },
+                        new
+                        {
+                            Id = 18,
+                            No = 18
+                        },
+                        new
+                        {
+                            Id = 19,
+                            No = 19
+                        },
+                        new
+                        {
+                            Id = 20,
+                            No = 20
+                        },
+                        new
+                        {
+                            Id = 21,
+                            No = 21
+                        },
+                        new
+                        {
+                            Id = 22,
+                            No = 22
+                        },
+                        new
+                        {
+                            Id = 23,
+                            No = 23
+                        },
+                        new
+                        {
+                            Id = 24,
+                            No = 24
+                        },
+                        new
+                        {
+                            Id = 25,
+                            No = 25
+                        },
+                        new
+                        {
+                            Id = 26,
+                            No = 26
+                        },
+                        new
+                        {
+                            Id = 27,
+                            No = 27
+                        },
+                        new
+                        {
+                            Id = 28,
+                            No = 28
+                        },
+                        new
+                        {
+                            Id = 29,
+                            No = 29
+                        },
+                        new
+                        {
+                            Id = 30,
+                            No = 30
+                        },
+                        new
+                        {
+                            Id = 31,
+                            No = 31
+                        },
+                        new
+                        {
+                            Id = 32,
+                            No = 32
+                        });
                 });
 
             modelBuilder.Entity("Trash_Track.Models.ApplicationUser", b =>
