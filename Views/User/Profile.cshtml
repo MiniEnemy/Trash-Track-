@@ -1,0 +1,96 @@
+﻿@model Trash_Track.Models.ViewModels.UserProfileViewModel
+
+<h2>My Profile</h2>
+
+<!-- Success/Error Messages -->
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success">@TempData["success"]</div>
+}
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-danger">@TempData["error"]</div>
+}
+
+<form asp-action="Profile" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="card p-4">
+        <!-- Profile Information (Read-only but included in form) -->
+        <div class="row mb-3">
+            <label class="col-sm-3 fw-bold">Email:</label>
+            <div class="col-sm-9">
+                <input asp-for="Email" type="text" class="form-control" readonly />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-sm-3 fw-bold">Full Name:</label>
+            <div class="col-sm-9">
+                <input asp-for="FullName" type="text" class="form-control" readonly />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-sm-3 fw-bold">Address:</label>
+            <div class="col-sm-9">
+                <input asp-for="Address" type="text" class="form-control" readonly />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-sm-3 fw-bold">Contact Number:</label>
+            <div class="col-sm-9">
+                <input asp-for="ContactNumber" type="text" class="form-control" readonly />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-sm-3 fw-bold">Ward Number:</label>
+            <div class="col-sm-9">
+                <input asp-for="WardNumber" type="number" class="form-control" readonly />
+            </div>
+        </div>
+
+        <hr />
+
+        <!-- Password Change Section -->
+        <h4>Change Password</h4>
+        <p class="text-muted small">Leave blank if you don't want to change your password.</p>
+
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label asp-for="CurrentPassword" class="form-label">Current Password</label>
+            <input asp-for="CurrentPassword" type="password" class="form-control" />
+            <span asp-validation-for="CurrentPassword" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="NewPassword" class="form-label">New Password</label>
+            <input asp-for="NewPassword" type="password" class="form-control" />
+            <span asp-validation-for="NewPassword" class="text-danger"></span>
+            <div class="form-text">
+                Password must contain at least 6 characters with:
+                <ul class="small">
+                    <li>One uppercase letter (A-Z)</li>
+                    <li>One lowercase letter (a-z)</li>
+                    <li>One digit (0-9)</li>
+                    <li>One special character (any non-alphanumeric character)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ConfirmPassword" class="form-label">Confirm Password</label>
+            <input asp-for="ConfirmPassword" type="password" class="form-control" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update Profile</button>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
