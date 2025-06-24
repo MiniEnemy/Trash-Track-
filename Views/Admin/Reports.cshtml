@@ -1,0 +1,51 @@
+﻿@model List<Trash_Track.Models.Report>
+@{
+    ViewData["Title"] = "Manage Reports";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ward</th>
+            <th>Message</th>
+            <th>Photo</th>
+            <th>Status</th>
+            <th>Update Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var report in Model)
+        {
+            <tr>
+                <td>Ward @report.Ward.No</td>
+                <td>@report.Description</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(report.PhotoPath))
+                    {
+                        <img src="@report.PhotoPath" width="100" />
+                    }
+                </td>
+                <td>
+                    <span class="badge bg-@(
+                report.Status == "Resolved" ? "success" :
+                report.Status == "Ignored" ? "danger" : "warning")">
+                        @report.Status
+                    </span>
+                </td>
+                <td>
+                    <form asp-action="UpdateReportStatus" method="post">
+                        <input type="hidden" name="reportId" value="@report.Id" />
+                        <select name="status" class="form-select">
+                            <option value="Pending" selected="@((report.Status == "Pending") ? "selected" : null)">Pending</option>
+                            <option value="Resolved" selected="@((report.Status == "Resolved") ? "selected" : null)">Resolved</option>
+                            <option value="Ignored" selected="@((report.Status == "Ignored") ? "selected" : null)">Ignored</option>
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-primary mt-1">Update</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

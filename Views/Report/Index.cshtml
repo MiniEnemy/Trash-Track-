@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Trash_Track.Models.Report>
+@{
+    ViewData["Title"] = "Report List";
+}
+
+<h2>Report List</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Reporter</th>
+            <th>Ward</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Created</th>
+            
+            <th>Photo</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.ReporterName</td>
+                <td>@r.Ward?.Name</td>
+                <td>@r.Description</td>
+                <td>@r.Status</td>
+                <td>@r.CreatedAt.ToString("g")</td>
+                
+                <td>
+                    @if (!string.IsNullOrEmpty(r.PhotoPath))
+                    {
+                        <img src="@r.PhotoPath" width="100" />
+                    }
+                </td>
+                <td>
+                    @if (r.Status == "Pending")
+                    {
+                        <a asp-action="Edit" asp-route-id="@r.Id" class="btn btn-sm btn-warning">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@r.Id" class="btn btn-sm btn-danger">Delete</a>
+                    }
+                    else
+                    {
+                        <span class="text-muted">Locked</span>
+                    }
+                </td>
+                
+            </tr>
+        }
+    </tbody>
+</table>

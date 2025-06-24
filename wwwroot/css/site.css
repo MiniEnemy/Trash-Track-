@@ -1,36 +1,26 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.nav-bg {
-    background-color: white;
-    color:black;
-}
-
-.bg-green {
-    background-color: #a6c152;
-}
-
-.color-green{
-    color:green;    
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-    box-shadow: 0 0 0 0.1rem #38852c, 0 0 0 0.25rem #4e9734;
+    /*  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;*/
 }
 
+.bg-wh {
+    background-color: white;
+}
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }

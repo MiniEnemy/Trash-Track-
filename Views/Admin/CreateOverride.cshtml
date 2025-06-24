@@ -1,0 +1,62 @@
+﻿@model Trash_Track.Models.PickupOverride
+@{
+    ViewData["Title"] = "Create Pickup Override";
+}
+
+<div asp-validation-summary="All" class="text-danger"></div>
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="CreateOverride" method="post">
+    <div class="mb-3">
+        <label asp-for="WardId" class="form-label"></label>
+        <select asp-for="WardId" asp-items="ViewBag.Wards" class="form-select">
+            <option value="">-- Select Ward --</option>
+        </select>
+        <span asp-validation-for="WardId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="StartDate" class="form-label"></label>
+        <input asp-for="StartDate" type="date" class="form-control" />
+        <span asp-validation-for="StartDate" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="EndDate" class="form-label"></label>
+        <input asp-for="EndDate" type="date" class="form-control" />
+        <span asp-validation-for="EndDate" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NewTime" class="form-label"></label>
+        <input asp-for="NewTime" type="time" class="form-control" />
+        <small class="form-text text-muted">Leave blank if cancelled</small>
+        <span asp-validation-for="NewTime" class="text-danger"></span>
+    </div>
+
+    <div class="form-check mb-3">
+        <input asp-for="IsCancelled" class="form-check-input" type="checkbox" />
+        <label asp-for="IsCancelled" class="form-check-label">Cancel Pickup</label>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Message" class="form-label"></label>
+        <textarea asp-for="Message" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="Message" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="DriverId" class="form-label">Assign Driver</label>
+        <select asp-for="DriverId" asp-items="ViewBag.Drivers" class="form-select">
+            <option selected disabled value="">-- Select Driver --</option>
+        </select>
+        <span asp-validation-for="DriverId" class="text-danger"></span>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Create Override</button>
+    <a asp-action="Overrides" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
