@@ -14,16 +14,21 @@ namespace Trash_Track.Controllers
         private readonly TrashDBContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-        public UserController(TrashDBContext context, UserManager<IdentityUser> userManager)
+        private readonly RoleManager<IdentityRole> _roleManager;
+
+        public UserController(TrashDBContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
             _userManager = userManager;
+            _roleManager = roleManager;
         }
         public async Task<IActionResult> Index()
         {
             var userId = _userManager.GetUserId(User);
             var users = await _context.ApplicationUsers.ToListAsync();
             var viewModels = new List<UserViewModel>();
+            var roles = await _roleManager.Roles.Select(r => r.Name).ToListAsync();
+
             foreach (var user in users)
             {
                 var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
@@ -36,7 +41,9 @@ namespace Trash_Track.Controllers
                     Address = user.Address,
                     WardNumber = user.WardNumber,
                     Role = role ?? "Unknown",
-                    IsLocked = user.LockoutEnd.HasValue && user.LockoutEnd.Value > DateTime.UtcNow
+                    IsLocked = user.LockoutEnd.HasValue && user.LockoutEnd.Value > DateTime.UtcNow,
+                    AvailableRoles = roles,
+                    SelectedRole = role
                 });
             }
             return View(viewModels);
@@ -64,5 +71,21 @@ namespace Trash_Track.Controllers
             }
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public async Task<IActionResult> ChangeRole(string userId, string newRole)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null || string.IsNullOrEmpty(newRole)) return RedirectToAction("Index");
+
+            var currentRoles = await _userManager.GetRolesAsync(user);
+            if (currentRoles.Any())
+            {
+                await _userManager.RemoveFromRolesAsync(user, currentRoles);
+            }
+            await _userManager.AddToRoleAsync(user, newRole);
+
+            return RedirectToAction("Index");
+        }
+
     }
 }
