@@ -1,50 +1,68 @@
 ﻿@page
 @model LoginModel
-
 @{
     ViewData["Title"] = "Log in";
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
-    <div class="col-md-4">
-        <section>
-            <form id="account" method="post">
-                <h2>Use a local account to log in.</h2>
-                <hr />
-                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-                <div class="form-floating mb-3">
-                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                    <label asp-for="Input.Email" class="form-label">Email</label>
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+<div class="container-fluid vh-100 d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, #f1f8e9 0%, #ffffff 100%);">
+    <div class="row justify-content-center w-100">
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card shadow-lg border-0 rounded-3">
+                <!-- Header -->
+                <div class="card-header text-center py-4 border-0" style="background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%);">
+                    <h1 class="text-white mb-2 fw-bold">@ViewData["Title"]</h1>
+                    <h6 class="text-white-50 mb-0">Welcome back! Please sign in to your account.</h6>
                 </div>
-                <div class="form-floating mb-3">
-                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
-                    <label asp-for="Input.Password" class="form-label">Password</label>
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+
+                <!-- Body -->
+                <div class="card-body p-4">
+                    <form id="account" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Email"
+                                   class="form-control border-2 rounded-3"
+                                   style="border-color: #e8f5e8 !important;"
+                                   autocomplete="username"
+                                   aria-required="true"
+                                   placeholder="name@example.com" />
+                            <label asp-for="Input.Email" class="form-label" style="color: #8d6e63;">Email Address</label>
+                            <span asp-validation-for="Input.Email" class="text-danger small"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Password"
+                                   class="form-control border-2 rounded-3"
+                                   style="border-color: #e8f5e8 !important;"
+                                   autocomplete="current-password"
+                                   aria-required="true"
+                                   placeholder="password" />
+                            <label asp-for="Input.Password" class="form-label" style="color: #8d6e63;">Password</label>
+                            <span asp-validation-for="Input.Password" class="text-danger small"></span>
+                        </div>
+
+                        <div class="form-check mb-4">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   asp-for="Input.RememberMe"
+                                   id="remember-me" />
+                            <label class="form-check-label fw-medium" for="remember-me" style="color: #1b5e20;">
+                                @Html.DisplayNameFor(m => m.Input.RememberMe)
+                            </label>
+                        </div>
+
+                        <div class="d-grid mb-4">
+                            <button id="login-submit"
+                                    type="submit"
+                                    class="btn btn-lg py-3 fw-bold rounded-3 border-0"
+                                    style="background: linear-gradient(135deg, #ff8f00 0%, #ff6f00 100%); color: white;">
+                                Sign In
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <div class="checkbox mb-3">
-                    <label asp-for="Input.RememberMe" class="form-label">
-                        <input class="form-check-input" asp-for="Input.RememberMe" />
-                        @Html.DisplayNameFor(m => m.Input.RememberMe)
-                    </label>
-                </div>
-                <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
-                </div>
-                <div>
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                    </p>
-                </div>
-            </form>
-        </section>
+            </div>
+        </div>
     </div>
 </div>
 

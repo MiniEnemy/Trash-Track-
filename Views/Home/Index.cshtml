@@ -3,7 +3,7 @@
         <div class="row justify-content-center text-center py-5">
             <div class="col-lg-10 py-5">
                 <h1 class="display-4 fw-bold mb-4">Transforming Wastse Management in <span class="text-kathmandu">Kathmandu</span></h1>
-                <p class="lead mb-5">Track collection schedules, report issues, and contribute to a cleaner Kathmandu through our community     powered platform.</p>
+                <p class="lead mb-5">Track collection schedules, report issues, and contribute to a cleaner Kathmandu through our communitypowered platform.</p>
                 <div class="d-flex justify-content-center flex-wrap gap-3">
                     <button class="btn btn-accent btn-lg px-4 py-3 fw-bold" data-bs-toggle="modal" data-bs-target="#authModal">
                         <i class="bi bi-arrow-right-circle me-2"></i>Get Started
@@ -125,6 +125,148 @@
         </div>
     </div>
 </section>
+
+<section id="schedule" class="py-6 bg-white">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold text-primary">Waste Collection Schedules</h2>
+            <p class="lead">Find your ward's collection days and times</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-5 mb-4 mb-lg-0">
+                <div class="kathmandu-map">
+                    <div class="map-overlay">
+                        <div>
+                            <h4 class="fw-bold">Kathmandu Ward Coverage</h4>
+                            <p>TrashTrack currently serves all 32 wards</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="eco-card overflow-hidden">
+                    <div class="eco-card-header">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center">
+                            <h4 class="mb-0"><i class="bi bi-calendar3 me-2"></i>Collection Schedule</h4>
+                            <div class="mt-2 mt-md-0">
+                                <div class="input-group">
+                                    <label class="input-group-text bg-white text-dark border-0" for="wardSelect"><i class="bi bi-geo-alt"></i></label>
+                                    <select class="form-select border-0" id="wardSelect">
+                                        <option value="" selected disabled>Choose your ward</option>
+                                        <option value="1">Ward 1 - Dilli Bazaar</option>
+                                        <option value="2">Ward 2 - Gyaneshwor</option>
+                                        <option value="3">Ward 3 - Gaushala</option>
+                                        <option value="4">Ward 4 - Sinamangal</option>
+                                        <option value="5">Ward 5 - Koteshwor</option>
+                                        <option value="6">Ward 6 - Tinkune</option>
+                                        <option value="7">Ward 7 - Baneshwor</option>
+                                        <option value="8">Ward 8 - Minbhawan</option>
+                                        <option value="9">Ward 9 - Maitidevi</option>
+                                        <option value="10">Ward 10 - Anamnagar</option>
+                                        <option value="11">Ward 11 - Bhimsengola</option>
+                                        <option value="12">Ward 12 - Shankhamul</option>
+                                        <option value="13">Ward 13 - Kalopul</option>
+                                        <option value="14">Ward 14 - Chabahil</option>
+                                        <option value="15">Ward 15 - Mitrapark</option>
+                                        <option value="16">Ward 16 - Bouddha</option>
+                                        <option value="17">Ward 17 - Jorpati</option>
+                                        <option value="18">Ward 18 - Gokarna</option>
+                                        <option value="19">Ward 19 - Kapan</option>
+                                        <option value="20">Ward 20 - Baluwatar</option>
+                                        <option value="21">Ward 21 - Lazimpat</option>
+                                        <option value="22">Ward 22 - Lainchaur</option>
+                                        <option value="23">Ward 23 - Naxal</option>
+                                        <option value="24">Ward 24 - Thamel</option>
+                                        <option value="25">Ward 25 - Kamaladi</option>
+                                        <option value="26">Ward 26 - Durbar Marg</option>
+                                        <option value="27">Ward 27 - New Road</option>
+                                        <option value="28">Ward 28 - Ason</option>
+                                        <option value="29">Ward 29 - Indra Chowk</option>
+                                        <option value="30">Ward 30 - Teku</option>
+                                        <option value="31">Ward 31 - Kalimati</option>
+                                        <option value="32">Ward 32 - Swayambhu</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="row" id="scheduleDisplay">
+                            <div class="col-12 text-center py-5">
+                                <div class="alert alert-light">
+                                    <h5 class="text-muted">Select a ward to view collection schedule</h5>
+                                    <p class="mb-0">Your personalized schedule will appear here once you select your ward</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="about" class="py-6 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold text-primary">Our Team</h2>
+            <p class="lead">The KAKA team behind TrashTrack</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="eco-card text-center p-4 h-100">
+                    <img src="https://ui-avatars.com/api/?name=Jatin+Bansal&background=2e7d32&color=fff" class="avatar mx-auto mb-3">
+                    <h5 class="fw-bold mb-1">Jatin Bansal</h5>
+                    <p class="text-muted mb-3">Frontend & Documentation</p>
+                    <div class="d-flex justify-content-center gap-2">
+                        <a href="#" class="text-primary"><i class="bi bi-linkedin fs-5"></i></a>
+                        <a href="#" class="text-primary"><i class="bi bi-github fs-5"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="eco-card text-center p-4 h-100">
+                    <img src="https://ui-avatars.com/api/?name=Aryan+Khatiwoda&background=8d6e63&color=fff" class="avatar mx-auto mb-3">
+                    <h5 class="fw-bold mb-1">Aryan Khatiwoda</h5>
+                    <p class="text-muted mb-3">Backend Development</p>
+                    <div class="d-flex justify-content-center gap-2">
+                        <a href="#" class="text-primary"><i class="bi bi-linkedin fs-5"></i></a>
+                        <a href="#" class="text-primary"><i class="bi bi-github fs-5"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="eco-card text-center p-4 h-100">
+                    <img src="https://ui-avatars.com/api/?name=Ajut+Dangol&background=388e3c&color=fff" class="avatar mx-auto mb-3">
+                    <h5 class="fw-bold mb-1">Ajut Dangol</h5>
+                    <p class="text-muted mb-3">Backend Development</p>
+                    <div class="d-flex justify-content-center gap-2">
+                        <a href="#" class="text-primary"><i class="bi bi-linkedin fs-5"></i></a>
+                        <a href="#" class="text-primary"><i class="bi bi-github fs-5"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="eco-card text-center p-4 h-100">
+                    <img src="https://ui-avatars.com/api/?name=Santosh+Bohra&background=ff8f00&color=fff" class="avatar mx-auto mb-3">
+                    <h5 class="fw-bold mb-1">Santosh Bohra</h5>
+                    <p class="text-muted mb-3">Frontend & UI/UX</p>
+                    <div class="d-flex justify-content-center gap-2">
+                        <a href="#" class="text-primary"><i class="bi bi-linkedin fs-5"></i></a>
+                        <a href="#" class="text-primary"><i class="bi bi-github fs-5"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 

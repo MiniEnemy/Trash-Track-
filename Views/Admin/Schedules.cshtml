@@ -3,54 +3,152 @@
     ViewData["Title"] = "Manage Pickup Schedules";
 }
 
-<h2>@ViewData["Title"]</h2>
+<div class="container-fluid py-4" style="background: linear-gradient(135deg, #f1f8e9 0%, #ffffff 100%); min-height: 100vh;">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <!-- Header Section -->
+            <div class="card border-0 shadow-sm mb-4" style="background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%);">
+                <div class="card-body text-center py-4">
+                    <h1 class="text-white mb-2 fw-bold">
+                        <i class="bi bi-calendar-check me-2"></i>
+                        @ViewData["Title"]
+                    </h1>
+                    <p class="text-white-50 mb-0">Manage ward pickup schedules and driver assignments</p>
+                </div>
+            </div>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Ward No</th>
-            <th>Pickup Day</th>
-            <th>Pickup Time</th>
-            <th>Driver</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <form asp-action="UpdateSchedule" method="post">
-                    <input type="hidden" name="scheduleId" value="@item.Id" />
-                <td>Ward @item.Ward.No</td>
-                <td>
-                    <select name="day" class="form-select">
-                            @foreach (DayOfWeek day in Enum.GetValues(typeof(DayOfWeek)))
-                            {
-                            <option value="@day" selected="@(item.PickupDay == day ? "selected" : null)">
-                                    @day
-                            </option>
-                            }
-                    </select>
-                </td>
-                <td>
-                    <input name="time" type="time" class="form-control" value="@item.PickupTime.ToString(@"hh\:mm")" />
-                </td>
-                <td>
-                    <select name="driverId" class="form-select">
-                            @foreach (var driver in ViewBag.Drivers as SelectList)
-                            {
-                            <option value="@driver.Value" selected="@(driver.Value == item.DriverId?.ToString() ? "selected" : null)">
-                                    @driver.Text
-                            </option>
-                            }
-                    </select>
-                </td>
+            <!-- Table Card -->
+            <div class="card border-0 shadow-lg">
+                <div class="card-header border-0 py-3" style="background-color: #f8f9fa;">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h5 class="mb-0 fw-semibold" style="color: #1b5e20;">
+                                <i class="bi bi-table me-2"></i>
+                                Schedule Overview
+                            </h5>
+                        </div>
+                        <div class="col-auto">
+                            <span class="badge rounded-pill px-3 py-2" style="background-color: #2e7d32; color: white;">
+                                @Model.Count() Wards
+                            </span>
+                        </div>
+                    </div>
+                </div>
 
-                <td>
-                    <button type="submit" class="btn btn-sm btn-primary">Update</button>
-                </td>
-                </form>
-            </tr>
-        }
-    </tbody>
-</table>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead style="background: linear-gradient(135deg, #388e3c 0%, #4caf50 100%);">
+                                <tr>
+                                    <th class="text-white fw-semibold py-3 px-4 border-0">
+                                        <i class="bi bi-geo-alt me-2"></i>Ward
+                                    </th>
+                                    <th class="text-white fw-semibold py-3 px-4 border-0">
+                                        <i class="bi bi-calendar3 me-2"></i>Pickup Day
+                                    </th>
+                                    <th class="text-white fw-semibold py-3 px-4 border-0">
+                                        <i class="bi bi-clock me-2"></i>Pickup Time
+                                    </th>
+                                    <th class="text-white fw-semibold py-3 px-4 border-0">
+                                        <i class="bi bi-person-badge me-2"></i>Driver
+                                    </th>
+                                    <th class="text-white fw-semibold py-3 px-4 border-0 text-center">
+                                        <i class="bi bi-gear me-2"></i>Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr class="border-0" style="border-bottom: 1px solid #e8f5e8 !important;">
+                                        <form asp-action="UpdateSchedule" method="post">
+                                            <input type="hidden" name="scheduleId" value="@item.Id" />
+
+                                        <td class="py-4 px-4 align-middle">
+                                            <div class="d-flex align-items-center">
+                                                <div class="rounded-circle d-flex align-items-center justify-content-center me-3"
+                                                     style="width: 40px; height: 40px; background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%);">
+                                                    <span class="text-white fw-bold">@item.Ward.No</span>
+                                                </div>
+                                                <div>
+                                                    <span class="fw-semibold" style="color: #1b5e20;">Ward @item.Ward.No</span>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td class="py-4 px-4 align-middle">
+                                            <select name="day" class="form-select border-2 rounded-3" style="border-color: #e8f5e8 !important;">
+                                                @foreach (DayOfWeek day in Enum.GetValues(typeof(DayOfWeek)))
+                                                {
+                                                    <option value="@day" selected="@(item.PickupDay == day ? "selected" : null)">
+                                                        @day
+                                                    </option>
+                                                }
+                                            </select>
+                                        </td>
+
+                                        <td class="py-4 px-4 align-middle">
+                                            <div class="input-group">
+                                                <span class="input-group-text border-2" style="border-color: #e8f5e8 !important; background-color: #f8f9fa;">
+                                                    <i class="bi bi-clock" style="color: #8d6e63;"></i>
+                                                </span>
+                                                <input name="time" type="time" class="form-control border-2"
+                                                       style="border-color: #e8f5e8 !important;"
+                                                       value="@item.PickupTime.ToString(@"hh\:mm")" />
+                                            </div>
+                                        </td>
+
+                                        <td class="py-4 px-4 align-middle">
+                                            <select name="driverId" class="form-select border-2" style="border-color: #e8f5e8 !important;">
+                                                @foreach (var driver in ViewBag.Drivers as SelectList)
+                                                {
+                                                    <option value="@driver.Value" selected="@(driver.Value == item.DriverId?.ToString() ? "selected" : null)">
+                                                        @driver.Text
+                                                    </option>
+                                                }
+                                            </select>
+                                        </td>
+
+                                        <td class="py-4 px-4 align-middle text-center">
+                                            <button type="submit" class="btn btn-sm px-4 py-2 fw-semibold rounded-3 border-0 d-flex align-items-center"
+                                                    style="background: linear-gradient(135deg, #ff8f00 0%, #ff6f00 100%); color: white;">
+                                                <i class="bi bi-check-circle me-2"></i>
+                                                Update
+                                            </button>
+                                        </td>
+                                        </form>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Custom Styles for Enhanced Look -->
+<style>
+    .table-hover tbody tr:hover {
+        background-color: rgba(46, 125, 50, 0.05) !important;
+        transform: translateY(-1px);
+        transition: all 0.2s ease;
+    }
+
+    .form-select:focus, .form-control:focus {
+        border-color: #2e7d32 !important;
+        box-shadow: 0 0 0 0.2rem rgba(46, 125, 50, 0.15) !important;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 143, 0, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .card {
+        transition: all 0.3s ease;
+    }
+
+    }</style>
