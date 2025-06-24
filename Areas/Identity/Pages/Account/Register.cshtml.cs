@@ -195,6 +195,18 @@ namespace Trash_Track.Areas.Identity.Pages.Account
                     {
                         await _userManager.AddToRoleAsync(user, Utility.Roles.User);
                     }
+                    if (Input.Role == Utility.Roles.Drivers)
+                    {
+                        var driver = new Driver
+                        {
+                            Name = Input.FullName,
+                            Contact = Input.ContactNumber,
+                            Status = "Active",
+                            UserId = await _userManager.GetUserIdAsync(user)
+                        };
+                        _dbContext.Drivers.Add(driver);
+                        await _dbContext.SaveChangesAsync();
+                    }
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

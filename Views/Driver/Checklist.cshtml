@@ -1,0 +1,24 @@
+﻿@model List<ReportViewModel>
+@{
+    ViewData["Title"] = "Driver Checklist";
+}
+
+<h1>Today's Pickup Checklist</h1>
+
+
+
+<form method="post" asp-action="UpdatePickupStatus">
+    @foreach (var report in Model)
+    {
+        <div class="form-group">
+            <label>@report.Description</label>
+            <input type="hidden" name="reportId" value="@report.ReportId" />
+            <input type="checkbox"
+                   name="isPickedUp"
+                   value="true"
+            @(report.IsPickedUp ? "checked" : "")
+                   onchange="this.form.submit()" />
+            <span>@(report.IsPickedUp ? "Picked Up" : "Not Picked Up")</span>
+        </div>
+    }
+</form>
