@@ -8,9 +8,23 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+.nav-bg {
+    background-color: white;
+    color:black;
 }
+
+.bg-green {
+    background-color: #a6c152;
+}
+
+.color-green{
+    color:green;    
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem #38852c, 0 0 0 0.25rem #4e9734;
+}
+
 
 html {
   position: relative;
