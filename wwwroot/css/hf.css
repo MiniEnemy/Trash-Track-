@@ -104,6 +104,12 @@ h1, h2, h3, h4, h5, .brand {
     padding: 1.5rem;
 }
 
+.table-success {
+    --bs-table-bg: rgb(95 142 98);
+}
+
+
+
 .schedule-item {
     border-left: 4px solid var(--kathmandu);
     padding-left: 1rem;

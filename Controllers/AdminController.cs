@@ -18,6 +18,10 @@ namespace Trash_Track.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.wardCount = _context.Wards.Count();
+            ViewBag.reportCount = _context.Reports.Count();
+            ViewBag.userCount = _context.Users.Count();
+
             return View();
         } 
         public IActionResult Schedules()

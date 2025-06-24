@@ -1,0 +1,65 @@
+﻿@model int
+@{
+    ViewBag.Title = "Admin Dashboard";
+}
+
+<div class="container py-4">
+    
+    <div class="p-3">
+        <h1 class="fs-2">Welcome, Admin!</h1>
+        <p class="lead">Use the dashboard to monitor and manage wards, reports, and users.</p>
+    </div>
+    <div class="d-flex gap-3 flex-wrap justify-content-around">
+        <div class="rounded-2">
+            <div class="card shadow-sm" style="width: 18rem;">
+                <div class="card-body text-center">
+                    <h1 class="fs-1">@ViewBag.wardCount</h1>
+                    <p class="card-text fs-2">
+                        <i class="bi bi-house-check"></i> Wards
+                    </p>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="rounded-2">
+            <div class="card shadow-sm" style="width: 18rem;">
+                <div class="card-body text-center">
+                    <h1 class="fs-1">@ViewBag.reportCount</h1>
+                    <p class="card-text fs-2">
+                        <i class="bi bi-flag-fill"></i> Reports
+                    </p>
+                    <a href="/Admin/Reports" class="btn btn-success">
+                        More <i class="bi bi-arrow-right-circle"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="rounded-2">
+            <div class="card shadow-sm" style="width: 18rem;">
+                <div class="card-body text-center">
+                    <h1 class="fs-1">@ViewBag.userCount</h1>
+                    <p class="card-text fs-2">
+                        <i class="bi bi-people"></i> Users
+                    </p>
+                    <a href="/Admin/Users" class="btn btn-success">
+                        More <i class="bi bi-arrow-right-circle"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <!-- Waste Management Quote Banner -->
+            <div class="alert alert-info text-center mb-4 rounded-3 shadow-sm" role="alert" style="font-size: 1.25rem;">
+                <strong>"Waste management is not just a duty, it's a responsibility for a cleaner tomorrow."</strong>
+            </div>
+
+        </div>
+    </div>
+
+   
+</div>
