@@ -1,0 +1,50 @@
+﻿@model Trash_Track.Models.PickupOverride
+@{
+    ViewData["Title"] = "Delete Override";
+}
+
+<h2 class="text-danger">Delete Pickup Override</h2>
+<hr />
+
+<div class="alert alert-warning">
+    <strong>Are you sure?</strong> This will permanently remove the override for:
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Ward</dt>
+    <dd class="col-sm-9">Ward @Model.Ward.No - @Model.Ward.Name</dd>
+
+    <dt class="col-sm-3">Date Range</dt>
+    <dd class="col-sm-9">@Model.StartDate.ToShortDateString() to @Model.EndDate.ToShortDateString()</dd>
+
+    <dt class="col-sm-3">Cancelled?</dt>
+    <dd class="col-sm-9">
+        @if (Model.IsCancelled)
+        {
+            <span class="badge bg-danger">Yes</span>
+        }
+        else
+        {
+            <span class="badge bg-success">No</span>
+        }
+    </dd>
+
+    @if (Model.NewTime.HasValue)
+    {
+        <dt class="col-sm-3">New Time</dt>
+        <dd class="col-sm-9">@Model.NewTime.Value.ToString(@"hh\:mm")</dd>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <dt class="col-sm-3">Message</dt>
+        <dd class="col-sm-9">@Model.Message</dd>
+    }
+</dl>
+
+<form asp-action="DeleteOverride" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Overrides" class="btn btn-secondary">Cancel</a>
+</form>

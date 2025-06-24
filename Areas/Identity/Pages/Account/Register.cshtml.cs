@@ -143,8 +143,8 @@ namespace Trash_Track.Areas.Identity.Pages.Account
             {
                 _roleManager.CreateAsync(new IdentityRole(Utility.Roles.User)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(Utility.Roles.Admin)).GetAwaiter().GetResult();
-
-
+                _roleManager.CreateAsync(new IdentityRole(Utility.Roles.WardHead)).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole(Utility.Roles.Drivers)).GetAwaiter().GetResult();
             }
             var wardItems = _dbContext.Wards
                 .OrderBy(w => w.No)

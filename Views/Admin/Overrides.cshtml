@@ -1,0 +1,53 @@
+﻿@model List<Trash_Track.Models.PickupOverride>
+@{
+    ViewData["Title"] = "Pickup Overrides";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ward</th>
+            <th>From</th>
+            <th>To</th>
+            <th>New Time</th>
+            <th>Cancelled?</th>
+            <th>Message</th>
+            <th>Drivers</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model)
+{
+    <tr>
+        <td>Ward @item.Ward.No</td>
+        <td>@item.StartDate.ToShortDateString()</td>
+        <td>@item.EndDate.ToShortDateString()</td>
+        <td>
+            @(item.NewTime.HasValue ? item.NewTime.Value.ToString(@"hh\:mm") : "-")
+        </td>
+        <td>
+            @if (item.IsCancelled)
+            {
+                <span class="badge bg-danger">Yes</span>
+            }
+            else
+            {
+                <span class="badge bg-success">No</span>
+            }
+        </td>
+        <td>@item.Message</td>
+        <td>@(item.Driver != null ? item.Driver.Name : "Not Assigned")</td>
+            </tr>
+        <td>
+            <a asp-action="EditOverride" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
+
+            <a asp-action="DeleteOverride" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+
+        </td>
+}
+
+
+    </tbody>
+</table>

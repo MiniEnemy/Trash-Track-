@@ -1,0 +1,52 @@
+﻿@model List<Trash_Track.Models.ViewModels.UserViewModel>
+@{
+    ViewData["Title"] = "User Management";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Full Name</th>
+            <th>Contact</th>
+            <th>Address</th>
+            <th>Ward</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>@user.FullName</td>
+                <td>@user.ContactNumber</td>
+                <td>@user.Address</td>
+                <td>@user.WardNumber</td>
+                <td>@user.Role</td>
+                <td>
+                    @if (user.IsLocked)
+                    {
+                        <span class="badge bg-danger">Locked</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-success">Active</span>
+                    }
+                </td>
+                <td>
+                    <form asp-action="@(user.IsLocked ? "Unlock" : "Lock")" method="post">
+                        <input type="hidden" name="id" value="@user.Id" />
+                        <button type="submit" class="btn btn-sm @(user.IsLocked ? "btn-success" : "btn-danger")">
+                            @(user.IsLocked ? "Unlock" : "Lock")
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
