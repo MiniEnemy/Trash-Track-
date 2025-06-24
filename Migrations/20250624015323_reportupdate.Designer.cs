@@ -12,8 +12,8 @@ using Trash_Track.Models;
 namespace Trash_Track.Migrations
 {
     [DbContext(typeof(TrashDBContext))]
-    [Migration("20250623022108_wardname")]
-    partial class wardname
+    [Migration("20250624015323_reportupdate")]
+    partial class reportupdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -293,11 +293,18 @@ namespace Trash_Track.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("DriverId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsCancelled")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<TimeSpan?>("NewTime")
                         .HasColumnType("time");
@@ -309,6 +316,8 @@ namespace Trash_Track.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DriverId");
 
                     b.HasIndex("WardId");
 
@@ -323,6 +332,9 @@ namespace Trash_Track.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("DriverId")
+                        .HasColumnType("int");
+
                     b.Property<int>("PickupDay")
                         .HasColumnType("int");
 
@@ -333,6 +345,8 @@ namespace Trash_Track.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DriverId");
 
                     b.HasIndex("WardId")
                         .IsUnique();
@@ -589,6 +603,9 @@ namespace Trash_Track.Migrations
 
                     b.Property<string>("ReporterName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReporterUserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
@@ -898,22 +915,34 @@ namespace Trash_Track.Migrations
 
             modelBuilder.Entity("Trash_Track.Models.PickupOverride", b =>
                 {
+                    b.HasOne("Trash_Track.Models.Driver", "Driver")
+                        .WithMany()
+                        .HasForeignKey("DriverId");
+
                     b.HasOne("Trash_Track.Models.Ward", "Ward")
                         .WithMany()
                         .HasForeignKey("WardId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Driver");
+
                     b.Navigation("Ward");
                 });
 
             modelBuilder.Entity("Trash_Track.Models.PickupSchedule", b =>
                 {
+                    b.HasOne("Trash_Track.Models.Driver", "Driver")
+                        .WithMany()
+                        .HasForeignKey("DriverId");
+
                     b.HasOne("Trash_Track.Models.Ward", "Ward")
                         .WithOne("PickupSchedule")
                         .HasForeignKey("Trash_Track.Models.PickupSchedule", "WardId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Driver");
 
                     b.Navigation("Ward");
                 });

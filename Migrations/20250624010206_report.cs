@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Trash_Track.Migrations
 {
     /// <inheritdoc />
-    public partial class coded : Migration
+    public partial class report : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -201,11 +201,18 @@ namespace Trash_Track.Migrations
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     NewTime = table.Column<TimeSpan>(type: "time", nullable: true),
-                    IsCancelled = table.Column<bool>(type: "bit", nullable: false)
+                    IsCancelled = table.Column<bool>(type: "bit", nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
+                    DriverId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PickupOverrides", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PickupOverrides_Drivers_DriverId",
+                        column: x => x.DriverId,
+                        principalTable: "Drivers",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_PickupOverrides_Wards_WardId",
                         column: x => x.WardId,
@@ -222,11 +229,17 @@ namespace Trash_Track.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     WardId = table.Column<int>(type: "int", nullable: false),
                     PickupDay = table.Column<int>(type: "int", nullable: false),
-                    PickupTime = table.Column<TimeSpan>(type: "time", nullable: false)
+                    PickupTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    DriverId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PickupSchedules", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PickupSchedules_Drivers_DriverId",
+                        column: x => x.DriverId,
+                        principalTable: "Drivers",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_PickupSchedules_Wards_WardId",
                         column: x => x.WardId,
@@ -318,41 +331,41 @@ namespace Trash_Track.Migrations
 
             migrationBuilder.InsertData(
                 table: "PickupSchedules",
-                columns: new[] { "Id", "PickupDay", "PickupTime", "WardId" },
+                columns: new[] { "Id", "DriverId", "PickupDay", "PickupTime", "WardId" },
                 values: new object[,]
                 {
-                    { 1, 0, new TimeSpan(0, 6, 0, 0, 0), 1 },
-                    { 2, 1, new TimeSpan(0, 6, 0, 0, 0), 2 },
-                    { 3, 2, new TimeSpan(0, 6, 0, 0, 0), 3 },
-                    { 4, 3, new TimeSpan(0, 6, 0, 0, 0), 4 },
-                    { 5, 4, new TimeSpan(0, 6, 0, 0, 0), 5 },
-                    { 6, 5, new TimeSpan(0, 6, 0, 0, 0), 6 },
-                    { 7, 6, new TimeSpan(0, 6, 0, 0, 0), 7 },
-                    { 8, 0, new TimeSpan(0, 6, 0, 0, 0), 8 },
-                    { 9, 1, new TimeSpan(0, 6, 0, 0, 0), 9 },
-                    { 10, 2, new TimeSpan(0, 6, 0, 0, 0), 10 },
-                    { 11, 3, new TimeSpan(0, 6, 0, 0, 0), 11 },
-                    { 12, 4, new TimeSpan(0, 6, 0, 0, 0), 12 },
-                    { 13, 5, new TimeSpan(0, 6, 0, 0, 0), 13 },
-                    { 14, 6, new TimeSpan(0, 6, 0, 0, 0), 14 },
-                    { 15, 0, new TimeSpan(0, 6, 0, 0, 0), 15 },
-                    { 16, 1, new TimeSpan(0, 6, 0, 0, 0), 16 },
-                    { 17, 2, new TimeSpan(0, 6, 0, 0, 0), 17 },
-                    { 18, 3, new TimeSpan(0, 6, 0, 0, 0), 18 },
-                    { 19, 4, new TimeSpan(0, 6, 0, 0, 0), 19 },
-                    { 20, 5, new TimeSpan(0, 6, 0, 0, 0), 20 },
-                    { 21, 6, new TimeSpan(0, 6, 0, 0, 0), 21 },
-                    { 22, 0, new TimeSpan(0, 6, 0, 0, 0), 22 },
-                    { 23, 1, new TimeSpan(0, 6, 0, 0, 0), 23 },
-                    { 24, 2, new TimeSpan(0, 6, 0, 0, 0), 24 },
-                    { 25, 3, new TimeSpan(0, 6, 0, 0, 0), 25 },
-                    { 26, 4, new TimeSpan(0, 6, 0, 0, 0), 26 },
-                    { 27, 5, new TimeSpan(0, 6, 0, 0, 0), 27 },
-                    { 28, 6, new TimeSpan(0, 6, 0, 0, 0), 28 },
-                    { 29, 0, new TimeSpan(0, 6, 0, 0, 0), 29 },
-                    { 30, 1, new TimeSpan(0, 6, 0, 0, 0), 30 },
-                    { 31, 2, new TimeSpan(0, 6, 0, 0, 0), 31 },
-                    { 32, 3, new TimeSpan(0, 6, 0, 0, 0), 32 }
+                    { 1, null, 0, new TimeSpan(0, 6, 0, 0, 0), 1 },
+                    { 2, null, 1, new TimeSpan(0, 6, 0, 0, 0), 2 },
+                    { 3, null, 2, new TimeSpan(0, 6, 0, 0, 0), 3 },
+                    { 4, null, 3, new TimeSpan(0, 6, 0, 0, 0), 4 },
+                    { 5, null, 4, new TimeSpan(0, 6, 0, 0, 0), 5 },
+                    { 6, null, 5, new TimeSpan(0, 6, 0, 0, 0), 6 },
+                    { 7, null, 6, new TimeSpan(0, 6, 0, 0, 0), 7 },
+                    { 8, null, 0, new TimeSpan(0, 6, 0, 0, 0), 8 },
+                    { 9, null, 1, new TimeSpan(0, 6, 0, 0, 0), 9 },
+                    { 10, null, 2, new TimeSpan(0, 6, 0, 0, 0), 10 },
+                    { 11, null, 3, new TimeSpan(0, 6, 0, 0, 0), 11 },
+                    { 12, null, 4, new TimeSpan(0, 6, 0, 0, 0), 12 },
+                    { 13, null, 5, new TimeSpan(0, 6, 0, 0, 0), 13 },
+                    { 14, null, 6, new TimeSpan(0, 6, 0, 0, 0), 14 },
+                    { 15, null, 0, new TimeSpan(0, 6, 0, 0, 0), 15 },
+                    { 16, null, 1, new TimeSpan(0, 6, 0, 0, 0), 16 },
+                    { 17, null, 2, new TimeSpan(0, 6, 0, 0, 0), 17 },
+                    { 18, null, 3, new TimeSpan(0, 6, 0, 0, 0), 18 },
+                    { 19, null, 4, new TimeSpan(0, 6, 0, 0, 0), 19 },
+                    { 20, null, 5, new TimeSpan(0, 6, 0, 0, 0), 20 },
+                    { 21, null, 6, new TimeSpan(0, 6, 0, 0, 0), 21 },
+                    { 22, null, 0, new TimeSpan(0, 6, 0, 0, 0), 22 },
+                    { 23, null, 1, new TimeSpan(0, 6, 0, 0, 0), 23 },
+                    { 24, null, 2, new TimeSpan(0, 6, 0, 0, 0), 24 },
+                    { 25, null, 3, new TimeSpan(0, 6, 0, 0, 0), 25 },
+                    { 26, null, 4, new TimeSpan(0, 6, 0, 0, 0), 26 },
+                    { 27, null, 5, new TimeSpan(0, 6, 0, 0, 0), 27 },
+                    { 28, null, 6, new TimeSpan(0, 6, 0, 0, 0), 28 },
+                    { 29, null, 0, new TimeSpan(0, 6, 0, 0, 0), 29 },
+                    { 30, null, 1, new TimeSpan(0, 6, 0, 0, 0), 30 },
+                    { 31, null, 2, new TimeSpan(0, 6, 0, 0, 0), 31 },
+                    { 32, null, 3, new TimeSpan(0, 6, 0, 0, 0), 32 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -395,9 +408,19 @@ namespace Trash_Track.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PickupOverrides_DriverId",
+                table: "PickupOverrides",
+                column: "DriverId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PickupOverrides_WardId",
                 table: "PickupOverrides",
                 column: "WardId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PickupSchedules_DriverId",
+                table: "PickupSchedules",
+                column: "DriverId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PickupSchedules_WardId",

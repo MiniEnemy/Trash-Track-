@@ -12,18 +12,8 @@ using Trash_Track.Models;
 namespace Trash_Track.Migrations
 {
     [DbContext(typeof(TrashDBContext))]
-<<<<<<<< HEAD:Migrations/20250623024403_coded.Designer.cs
-<<<<<<<< HEAD:Migrations/20250623024403_coded.Designer.cs
-    [Migration("20250623024403_coded")]
-    partial class coded
-========
-    [Migration("20250623085635_pickupchanges")]
-    partial class pickupchanges
->>>>>>>> Back:Migrations/20250623085635_pickupchanges.Designer.cs
-========
-    [Migration("20250623014912_ajuststrt")]
-    partial class ajuststrt
->>>>>>>> ajut:Migrations/20250623014912_ajuststrt.Designer.cs
+    [Migration("20250624020901_reportupdate2")]
+    partial class reportupdate2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -611,8 +601,14 @@ namespace Trash_Track.Migrations
                     b.Property<string>("PhotoPath")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ReporterName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReporterUserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")

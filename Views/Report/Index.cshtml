@@ -2,6 +2,10 @@
 @{
     ViewData["Title"] = "Report List";
 }
+@if (!Model.Any())
+{
+    <div class="alert alert-info">You have not submitted any reports yet.</div>
+}
 
 <h2>Report List</h2>
 
@@ -13,9 +17,9 @@
             <th>Description</th>
             <th>Status</th>
             <th>Created</th>
-            
             <th>Photo</th>
             <th>Actions</th>
+            <th>Remarks</th>
         </tr>
     </thead>
     <tbody>
@@ -45,6 +49,17 @@
                         <span class="text-muted">Locked</span>
                     }
                 </td>
+                <td>
+                    @if (!string.IsNullOrWhiteSpace(r.Remarks))
+                    {
+                        <span>@r.Remarks</span>
+                    }
+                    else
+                    {
+                        <span class="text-muted">Please contact support at 98563467325.</span>
+                    }
+                </td>
+
                 
             </tr>
         }

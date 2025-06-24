@@ -5,6 +5,8 @@
         public int Id { get; set; }
 
         public string ReporterName { get; set; }
+        public string? ReporterUserId { get; set; }
+
 
         public int WardId { get; set; }
         public string Description { get; set; }
@@ -19,6 +21,8 @@
 
         public Ward Ward { get; set; }
         public Driver? AssignedDriver { get; set; }
+        public string? Remarks { get; set; } 
+
     }
 
 }

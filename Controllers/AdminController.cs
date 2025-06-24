@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Trash_Track.Models;
+using Trash_Track.Utility;
 
 namespace Trash_Track.Controllers
 {
@@ -44,23 +45,56 @@ namespace Trash_Track.Controllers
             return RedirectToAction("Schedules");
         }
 
-        public IActionResult Reports()
+        public async Task<IActionResult> AdminReports()
         {
-            var reports = _context.Reports.Include(r => r.Ward).ToList();
+            var reports = await _context.Reports
+                .Include(r => r.Ward)
+                .Include(r => r.AssignedDriver)
+                .ToListAsync();
+
+            ViewBag.StatusList = Trash_Track.Utility.ReportStatuses.All;
+            ViewBag.Drivers = _context.Drivers
+    .Select(d => new SelectListItem
+    {
+        Value = d.Id.ToString(),
+        Text = d.Name
+    }).ToList();
+
             return View(reports);
         }
+
+
         [HttpPost]
-        public IActionResult UpdateReportStatus(int reportId, string status)
+        public IActionResult UpdateReportStatus(int reportId, string status, string? remarks)
         {
+            if (!ReportStatuses.All.Contains(status))
+                return BadRequest("Invalid status.");
+
             var report = _context.Reports.FirstOrDefault(r => r.Id == reportId);
             if (report != null)
             {
                 report.Status = status;
+                report.Remarks = remarks;
                 _context.SaveChanges();
             }
 
-            return RedirectToAction("Reports");
+
+            return RedirectToAction("AdminReports");
         }
+        [HttpPost]
+        public IActionResult UpdateDriver(int reportId, int assignedDriverId)
+        {
+            var report = _context.Reports.FirstOrDefault(r => r.Id == reportId);
+            if (report != null)
+            {
+                report.AssignedDriverId = assignedDriverId;
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("AdminReports");
+        }
+
+
         public IActionResult CreateOverride()
         {
             var wards = _context.Wards.OrderBy(w => w.No).ToList();
