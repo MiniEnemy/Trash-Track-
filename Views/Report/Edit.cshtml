@@ -1,48 +1,133 @@
 ﻿@model Trash_Track.Models.Report
-
 @{
     ViewData["Title"] = "Edit Report";
 }
 
-<h2>Edit Report</h2>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="bi bi-pencil-square me-2"></i>Edit Report
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" enctype="multipart/form-data" method="post">
+                        <input type="hidden" asp-for="Id" />
 
-<form asp-action="Edit" enctype="multipart/form-data" method="post">
-    <input type="hidden" asp-for="Id" />
+                        <!-- Reporter Name -->
+                        <div class="mb-3">
+                            <label asp-for="ReporterName" class="form-label fw-semibold">
+                                <i class="bi bi-person me-1"></i>Reporter Name
+                            </label>
+                            <input asp-for="ReporterName " class="form-control form-control-lg"
+                                   placeholder="Enter reporter name" disabled />
+                            <span asp-validation-for="ReporterName" class="text-danger"></span>
+                        </div>
 
-    <div class="form-group">
-        <label asp-for="ReporterName"></label>
-        <input asp-for="ReporterName" class="form-control" />
-        <span asp-validation-for="ReporterName" class="text-danger"></span>
+                        <!-- Ward Selection -->
+                        <div class="mb-3">
+                            <label asp-for="WardId" class="form-label fw-semibold">
+                                <i class="bi bi-geo-alt me-1"></i>Ward
+                            </label>
+                            <select asp-for="WardId" asp-items="ViewBag.Wards"
+                                    class="form-select form-select-lg" disabled>
+                                <option value="">Select Ward</option>
+                            </select>
+                            <span asp-validation-for="WardId" class="text-danger"></span>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label fw-semibold">
+                                <i class="bi bi-card-text me-1"></i>Description
+                            </label>
+                            <textarea asp-for="Description" class="form-control" rows="5"
+                                      placeholder="Provide detailed description of the issue..."></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <!-- Current Photo Display -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">
+                                <i class="bi bi-image me-1"></i>Current Photo
+                            </label>
+                            <div class="border rounded p-3 bg-light">
+                                @if (!string.IsNullOrEmpty(Model.PhotoPath))
+                                {
+                                    <div class="text-center">
+                                        <img src="@Model.PhotoPath"
+                                             class="img-thumbnail shadow-sm"
+                                             style="max-width: 200px; max-height: 200px;"
+                                             alt="Current report photo" />
+                                        <p class="text-muted mt-2 mb-0">
+                                            <small>Current uploaded photo</small>
+                                        </p>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="text-center text-muted py-4">
+                                        <i class="bi bi-image fs-1"></i>
+                                        <p class="mb-0">No photo uploaded</p>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- New Photo Upload -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">
+                                <i class="bi bi-cloud-upload me-1"></i>Upload New Photo
+                                <span class="badge bg-secondary ms-2">Optional</span>
+                            </label>
+                            <input type="file" name="newPhoto" class="form-control"
+                                   accept="image/*" />
+                            <div class="form-text">
+                                <i class="bi bi-info-circle me-1"></i>
+                                Leave empty to keep current photo. Supported formats: JPG, PNG, GIF
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="@Url.Action("Index")" class="btn btn-outline-secondary btn-lg me-md-2">
+                                <i class="bi bi-arrow-left me-1"></i>Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-check-circle me-1"></i>Update Report
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Additional Info Card -->
+            <div class="card mt-4 border-info">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            <i class="bi bi-shield-check fs-3 text-info"></i>
+                            <h6 class="mt-2">Secure Upload</h6>
+                            <small class="text-muted">Your data is protected</small>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <i class="bi bi-clock-history fs-3 text-info"></i>
+                            <h6 class="mt-2">Quick Process</h6>
+                            <small class="text-muted">Updates in real-time</small>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <i class="bi bi-people fs-3 text-info"></i>
+                            <h6 class="mt-2">Community Impact</h6>
+                            <small class="text-muted">Help improve your ward</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="form-group">
-        <label asp-for="WardId"></label>
-        <select asp-for="WardId" asp-items="ViewBag.Wards" class="form-control"></select>
-        <span asp-validation-for="WardId" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description" class="form-control"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label>Current Photo:</label><br />
-        @if (!string.IsNullOrEmpty(Model.PhotoPath))
-        {
-            <img src="@Model.PhotoPath" width="120" />
-        }
-    </div>
-
-    <div class="form-group">
-        <label>Upload New Photo (optional):</label>
-        <input type="file" name="newPhoto" class="form-control" />
-    </div>
-
-
-    <button type="submit" class="btn btn-primary">Update Report</button>
-</form>
+</div>
 
 @section Scripts {
     @{
