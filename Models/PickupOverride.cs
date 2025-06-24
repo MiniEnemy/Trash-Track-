@@ -17,6 +17,8 @@ namespace Trash_Track.Models
         [DataType(DataType.Date)]
         [Display(Name = "Start Date")]
         public DateTime StartDate { get; set; }
+        public DayOfWeek? OverrideDay { get; set; } 
+
 
         [Required]
         [DataType(DataType.Date)]

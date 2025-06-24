@@ -1,0 +1,25 @@
+﻿        @model Trash_Track.Models.ViewModels.PickupViewModel
+
+<h2>Pickup Info - Ward @Model.WardNumber (@Model.WardName)</h2>
+
+@if (Model.IsOverrideToday)
+{
+    <div class="alert @(Model.IsCancelled ? "alert-danger" : "alert-info")">
+        <strong>Pickup Schedule (Override)</strong><br />
+        <strong>Day:</strong> @Model.OverrideDay <br />
+        <strong>Time:</strong> @Model.OverrideTime?.ToString(@"hh\:mm") <br />
+        <strong>Driver:</strong> @Model.OverrideDriver <br />
+        <strong>Note:</strong> @Model.OverrideMessage
+    </div>
+}
+else
+{
+    <div class="alert alert-success">
+        <strong>Pickup Schedule (Regular)</strong><br />
+        <strong>Day:</strong> @Model.RegularDay <br />
+        <strong>Time:</strong> @Model.RegularTime?.ToString(@"hh\:mm") <br />
+        <strong>Driver:</strong> @Model.RegularDriver
+    </div>
+}
+
+
