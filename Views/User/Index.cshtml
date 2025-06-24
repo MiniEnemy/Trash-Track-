@@ -15,7 +15,7 @@
             <th>Ward</th>
             <th>Role</th>
             <th>Status</th>
-            <th>Action</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -27,7 +27,22 @@
                 <td>@user.ContactNumber</td>
                 <td>@user.Address</td>
                 <td>@user.WardNumber</td>
-                <td>@user.Role</td>
+
+                <td>
+                    <form asp-action="ChangeRole" method="post" class="d-flex gap-2 align-items-center">
+                        <input type="hidden" name="userId" value="@user.Id" />
+                        <select name="newRole" class="form-select form-select-sm w-auto">
+                            @foreach (var role in user.AvailableRoles ?? new List<string>())
+                            {
+                                <option value="@role" selected="@(role == user.Role)">
+                                    @role
+                                </option>
+                            }
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-outline-primary">Change</button>
+                    </form>
+                </td>
+
                 <td>
                     @if (user.IsLocked)
                     {
@@ -38,6 +53,7 @@
                         <span class="badge bg-success">Active</span>
                     }
                 </td>
+
                 <td>
                     <form asp-action="@(user.IsLocked ? "Unlock" : "Lock")" method="post">
                         <input type="hidden" name="id" value="@user.Id" />

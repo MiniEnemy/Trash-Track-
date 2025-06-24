@@ -32,6 +32,7 @@ namespace Trash_Track.Models
         [Display(Name = "Cancel Pickup")]
         public bool IsCancelled { get; set; }
 
+        [Required]
         [StringLength(300)]
         public string? Message { get; set; }
         public int? DriverId { get; set; }
