@@ -118,7 +118,6 @@ namespace Trash_Track.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Profile(UserProfileViewModel vm)
         {
-            // Validate profile fields manually (since they're readonly, we need to ensure they're valid)
             if (string.IsNullOrWhiteSpace(vm.Email) ||
                 string.IsNullOrWhiteSpace(vm.FullName) ||
                 string.IsNullOrWhiteSpace(vm.Address) ||
@@ -128,7 +127,6 @@ namespace Trash_Track.Controllers
                 return View(vm);
             }
 
-            // Get the current user
             var user = await _context.ApplicationUsers.FirstOrDefaultAsync(u => u.Id == vm.Id);
             if (user == null)
             {
@@ -159,7 +157,6 @@ namespace Trash_Track.Controllers
                     return View(vm);
                 }
 
-                // Get the Identity user
                 var identityUser = await _userManager.FindByIdAsync(vm.Id);
                 if (identityUser == null)
                 {
@@ -167,7 +164,6 @@ namespace Trash_Track.Controllers
                     return View(vm);
                 }
 
-                // Attempt to change password
                 var pwdResult = await _userManager.ChangePasswordAsync(
                     identityUser,
                     vm.CurrentPassword,
@@ -181,7 +177,6 @@ namespace Trash_Track.Controllers
                     return View(vm);
                 }
 
-                // Refresh authentication cookie
                 await _signInManager.RefreshSignInAsync(identityUser);
                 TempData["success"] = "Password updated successfully!";
             }

@@ -21,7 +21,6 @@ namespace Trash_Track.Models.ViewModels
         [Required]
         public int WardNumber { get; set; }
 
-        // Password change fields - optional but with validation when provided
         [DataType(DataType.Password)]
         [Display(Name = "Current Password")]
         public string? CurrentPassword { get; set; }
