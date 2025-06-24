@@ -60,7 +60,7 @@
                             </select>
                             <span asp-validation-for="Input.WardNumber" class="text-danger small"></span>
                         </div>
-                        @* @if (User.IsInRole("Admin")) *@
+                        @if (User.IsInRole("Admin"))
                         {
                             <div class="form-floating mb-4">
                                 <select asp-for="Input.Role" asp-items="@Model.Input.RolesList" class="form-select">
@@ -77,7 +77,7 @@
                         <div class="text-center mt-3">
                             <p class="mb-0">
                                 Already have an account?
-                                <a href="/Account/Login" class="text-decoration-none">Sign in here</a>
+                                <a a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login" class="text-decoration-none">Sign in here</a>
                             </p>
                         </div>
                     </form>
