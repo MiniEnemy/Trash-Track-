@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link href="~/css/hf.css" rel="stylesheet" />
 </head>
-<body>
+<body class="pt-5">
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary py-3 shadow-sm fixed-top">
             <div class="container">
@@ -32,7 +32,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto me-4">
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" href="#">Home</a>
+                            <a class="nav-link active" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item mx-2">
                             <a class="nav-link" href="#features">Features</a>
@@ -41,7 +41,7 @@
                             <a class="nav-link" href="#schedule">Schedule</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="#report">Report</a>
+                            <a class="nav-link" asp-controller="Report" asp-action="Index">Report</a>
                         </li>
                         <li class="nav-item mx-2">
                             <a class="nav-link" href="#about">About</a>
@@ -51,12 +51,32 @@
                                 <i class="bi bi-person-circle me-2"></i> Login
                             </button>
                         </li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown">
+                                    Admin Panel
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="Schedules">Pickup Schedules</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="Overrides">Overrides</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="AdminReports">Reports</a></li>
+                                    <li><a class="dropdown-item" asp-controller="User" asp-action="Index">User Management</a></li>
+                                </ul>
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin") || User.IsInRole("WardHead"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                            </li>
+                        }
                     </ul>
-                    <div class="d-flex">
-                        <button id="authBtn" class="btn btn-secondary d-none d-lg-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#authModal">
-                            <i class="bi bi-person-circle me-2"></i>Login
-                        </button>
+
+                    <div class="d-flex align-items-center">
+                        <partial name="_LoginPartial" />
                     </div>
+
                 </div>
             </div>
         </nav>

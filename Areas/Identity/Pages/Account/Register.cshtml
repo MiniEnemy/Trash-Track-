@@ -60,15 +60,16 @@
                             </select>
                             <span asp-validation-for="Input.WardNumber" class="text-danger small"></span>
                         </div>
-
-                        <div class="form-floating mb-4">
-                            <select asp-for="Input.Role" asp-items="@Model.Input.RolesList" class="form-select">
-                                <option value="" disabled selected>-- Select a Role --</option>
-                            </select>
-                            <label asp-for="Input.Role">User Role</label>
-                            <span asp-validation-for="Input.Role" class="text-danger small"></span>
-                        </div>
-
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <div class="form-floating mb-4">
+                                <select asp-for="Input.Role" asp-items="@Model.Input.RolesList" class="form-select">
+                                    <option value="" disabled selected>-- Select a Role --</option>
+                                </select>
+                                <label asp-for="Input.Role">User Role</label>
+                                <span asp-validation-for="Input.Role" class="text-danger small"></span>
+                            </div>
+                        }
                         <div class="d-grid">
                             <button id="registerSubmit" type="submit" class="btn btn-primary btn-lg">Register</button>
                         </div>
