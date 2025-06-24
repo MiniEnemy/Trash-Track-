@@ -1,0 +1,81 @@
+﻿@model List<Trash_Track.Models.Report>
+@{
+    ViewData["Title"] = "All Reports";
+    var statusList = ViewBag.StatusList as List<string>;
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-light">
+        <tr>
+            <th>Reporter</th>
+            <th>Description</th>
+            <th>Ward</th>
+            <th>Created</th>
+            <th>Photo</th>
+            <th>Status</th>
+            <th>Update Status</th>
+            <th>Assigned Driver</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ReporterName</td>
+                <td>@item.Description</td>
+                <td>Ward @item.Ward?.No - @item.Ward?.Name</td>
+                <td>@item.CreatedAt.ToShortDateString()</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.PhotoPath))
+                    {
+                        <img src="@item.PhotoPath" alt="Photo" width="60" />
+                    }
+                    else
+                    {
+                        <span class="text-muted">No photo</span>
+                    }
+                </td>
+                <td>
+                    <span class="badge @(item.Status == "Resolved" ? "bg-success" :
+                                 item.Status == "In Progress" ? "bg-warning text-dark" :
+                                 "bg-secondary")">
+                        @item.Status
+                    </span>
+                </td>
+                <td>
+                    <form asp-action="UpdateReportStatus" method="post" class="d-flex align-items-center">
+                        <input type="hidden" name="reportId" value="@item.Id" />
+                        <select name="status" class="form-select form-select-sm me-2">
+                            @foreach (var status in statusList)
+                            {
+                                <option value="@status" selected="@(status == item.Status)">
+                                    @status
+                                </option>
+                            }
+                        </select>
+                        <textarea name="remarks" class="form-control mb-2" placeholder="Add optional remarks...">@item.Remarks</textarea>
+
+                        <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                    </form>
+                </td>
+                <td>
+                    <form asp-action="UpdateDriver" method="post" class="d-flex align-items-center">
+                        <input type="hidden" name="reportId" value="@item.Id" />
+                        <select name="assignedDriverId" class="form-select form-select-sm me-2">
+                            @foreach (var driver in ViewBag.Drivers as List<SelectListItem>)
+                            {
+                                <option value="@driver.Value" selected="@(item.AssignedDriverId.ToString() == driver.Value)">
+                                    @driver.Text
+                                </option>
+                            }
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-secondary">Update</button>
+                    </form>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

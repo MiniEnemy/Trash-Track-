@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Trash_Track.Models;
+using Trash_Track.Utility;
 
 namespace Trash_Track.Controllers
 {
@@ -81,10 +82,16 @@ namespace Trash_Track.Controllers
             var report = new Report
             {
                 ReporterName = vm.ReporterName,
+                ReporterUserId = _userManager.GetUserId(User), 
                 WardId = vm.WardId,
                 Description = vm.Description,
-                Status = "Pending",
-                CreatedAt = DateTime.Now
+                Status =ReportStatuses.Pending,
+                CreatedAt = DateTime.Now,
+                    // ✅ Get assigned driver from the pickup schedule
+                AssignedDriverId = _context.PickupSchedules
+                        .Where(s => s.WardId == vm.WardId)
+                        .Select(s => s.DriverId)
+                        .FirstOrDefault()
             };
 
             
@@ -114,9 +121,11 @@ namespace Trash_Track.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var userId = _userManager.GetUserId(User);
             var reports = await _context.Reports
                 .Include(r => r.Ward)
                 .Include(r => r.AssignedDriver)
+                .Where(r => r.ReporterUserId == userId) //Filter only user's reports
                 .ToListAsync();
 
             return View(reports);
