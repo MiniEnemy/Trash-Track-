@@ -3,35 +3,221 @@
     ViewData["Title"] = "Create Report";
 }
 
-<h2>Create Report</h2>
-<div asp-validation-summary="All" class="text-danger"></div>
+<style>
+    :root {
+        --primary: #2e7d32;
+        --secondary: #388e3c;
+        --accent: #ff8f00;
+        --light: #f1f8e9;
+        --dark: #1b5e20;
+        --kathmandu: #8d6e63;
+    }
 
-<form asp-action="Create" enctype="multipart/form-data" method="post">
-    <div class="form-group">
-        <label>Reporter Name</label>
-        <input type="text" class="form-control" value="@Model.ReporterName" disabled />
-        <input type="hidden" asp-for="ReporterName" />
+    .btn-custom-primary {
+        background-color: var(--primary);
+        border-color: var(--primary);
+        color: white;
+    }
+
+        .btn-custom-primary:hover {
+            background-color: var(--dark);
+            border-color: var(--dark);
+            color: white;
+        }
+
+    .btn-custom-accent {
+        background-color: var(--accent);
+        border-color: var(--accent);
+        color: white;
+    }
+
+        .btn-custom-accent:hover {
+            background-color: #e67e00;
+            border-color: #e67e00;
+            color: white;
+        }
+
+    .bg-custom-light {
+        background-color: var(--light);
+    }
+
+    .text-custom-primary {
+        color: var(--primary);
+    }
+
+    .border-custom-primary {
+        border-color: var(--primary) !important;
+    }
+
+    .form-control:focus {
+        border-color: var(--secondary);
+        box-shadow: 0 0 0 0.2rem rgba(46, 125, 50, 0.25);
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <!-- Header Section -->
+            <div class="text-center mb-5">
+                <div class="d-inline-flex align-items-center justify-content-center bg-custom-light rounded-circle p-3 mb-3">
+                    <i class="fas fa-plus-circle fa-3x text-custom-primary"></i>
+                </div>
+                <h1 class="display-6 fw-bold text-custom-primary mb-2">Create New Report</h1>
+                <p class="lead text-muted">Help keep your community clean by reporting waste issues</p>
+            </div>
+
+            <!-- Main Form Card -->
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-custom-light border-0 py-4">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-file-alt text-custom-primary me-3 fa-lg"></i>
+                        <h4 class="mb-0 text-custom-primary fw-semibold">Report Details</h4>
+                    </div>
+                </div>
+
+                <div class="card-body p-4">
+                    <!-- Validation Summary -->
+                    <div asp-validation-summary="All" class="alert alert-danger d-none"></div>
+
+                    <form asp-action="Create" enctype="multipart/form-data" method="post" class="needs-validation" novalidate>
+
+                        <!-- Reporter Information Section -->
+                        <div class="mb-4">
+                            <h5 class="text-custom-primary mb-3 pb-2 border-bottom border-custom-primary">
+                                <i class="fas fa-user me-2"></i>Reporter Information
+                            </h5>
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold text-dark">
+                                        <i class="fas fa-user-circle me-1 text-custom-primary"></i>
+                                        Reporter Name
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control border-custom-primary" value="@Model.ReporterName" disabled />
+                                    </div>
+                                     <input type="hidden" asp-for="ReporterName" /> 
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold text-dark">
+                                        <i class="fas fa-map-marker-alt me-1 text-custom-primary"></i>
+                                        Ward Location
+                                    </label>
+                                    <div class="input-group">
+                                        
+                                        <input type="text" class="form-control border-custom-primary" value="@ViewBag.WardDisplay" disabled />
+                                    </div>
+                                    <input type="hidden" asp-for="WardId" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Report Details Section -->
+                        <div class="mb-4">
+                            <h5 class="text-custom-primary mb-3 pb-2 border-bottom border-custom-primary">
+                                <i class="fas fa-clipboard-list me-2"></i>Issue Details
+                            </h5>
+
+                            <div class="mb-3">
+                                <label asp-for="Description" class="form-label fw-semibold text-dark">
+                                    <i class="fas fa-edit me-1 text-custom-primary"></i>
+                                    Description <span class="text-danger">*</span>
+                                </label>
+                                <textarea asp-for="Description"
+                                          class="form-control border-custom-primary"
+                                          rows="5"
+                                          placeholder="Please describe the waste issue in detail. Include location specifics, type of waste, and any other relevant information..."
+                                          required></textarea>
+                                <span asp-validation-for="Description" class="text-danger small"></span>
+                                <div class="form-text">
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    Provide as much detail as possible to help our team address the issue effectively
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Photo Upload Section -->
+                        <div class="mb-4">
+                            <h5 class="text-custom-primary mb-3 pb-2 border-bottom border-custom-primary">
+                                <i class="fas fa-camera me-2"></i>Photo 
+                            </h5>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold text-dark">
+                                    <i class="fas fa-image me-1 text-custom-primary"></i>
+                                    Upload Photo <span class="text-muted">(Optional)</span>
+                                </label>
+                                <div class="input-group">
+                                    <input asp-for="Photo"
+                                           type="file"
+                                           class="form-control border-custom-primary"
+                                           accept="image/*" />
+                                </div>
+                                <div class="form-text">
+                                    <i class="fas fa-lightbulb me-1"></i>
+                                    Adding a photo helps our team better understand and prioritize the issue
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center pt-4 border-top">
+                            <button type="submit" class="btn btn-custom-accent btn-lg px-5 shadow-sm">
+                                <i class="fas fa-paper-plane me-2"></i>
+                                Submit Report
+                            </button>
+                            <a href="@Url.Action("Index", "Home")" class="btn btn-outline-secondary btn-lg px-5">
+                                <i class="fas fa-arrow-left me-2"></i>
+                                Back to Dashboard
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Card Footer -->
+                <div class="card-footer bg-custom-light text-center border-0 py-3">
+                    <small class="text-muted">
+                        <i class="fas fa-shield-alt me-1"></i>
+                        Your report will be reviewed and assigned to the appropriate team
+                    </small>
+                </div>
+            </div>
+
+            <!-- Help Section -->
+            <div class="row mt-5">
+                <div class="col-md-4">
+                    <div class="card border-0 bg-light h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-clock fa-2x text-custom-primary mb-3"></i>
+                            <h6 class="fw-semibold">Quick Response</h6>
+                            <small class="text-muted">Reports are typically reviewed within 24 hours</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 bg-light h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-users fa-2x text-custom-primary mb-3"></i>
+                            <h6 class="fw-semibold">Community Impact</h6>
+                            <small class="text-muted">Help maintain a clean environment for everyone</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 bg-light h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-bell fa-2x text-custom-primary mb-3"></i>
+                            <h6 class="fw-semibold">Stay Updated</h6>
+                            <small class="text-muted">Receive notifications about your report status</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="form-group">
-        <label>Ward</label>
-        <input type="text" class="form-control" value="@ViewBag.WardDisplay" disabled />
-        <input type="hidden" asp-for="WardId" />
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description" class="form-control"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label>Upload Photo (optional):</label>
-        <input asp-for="Photo" type="file" class="form-control" />
-    </div>
-
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+</div>
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")

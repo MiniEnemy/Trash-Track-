@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Trash_Track</RootNamespace>
+	  <EnableCompressedStaticFiles>false</EnableCompressedStaticFiles>
   </PropertyGroup>
 
   <ItemGroup>

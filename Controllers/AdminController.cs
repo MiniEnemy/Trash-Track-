@@ -63,9 +63,8 @@ namespace Trash_Track.Controllers
             return View(reports);
         }
 
-
         [HttpPost]
-        public IActionResult UpdateReportStatus(int reportId, string status, string? remarks)
+        public IActionResult UpdateReport(int reportId, string status, int assignedDriverId, string? remarks)
         {
             if (!ReportStatuses.All.Contains(status))
                 return BadRequest("Invalid status.");
@@ -74,20 +73,8 @@ namespace Trash_Track.Controllers
             if (report != null)
             {
                 report.Status = status;
-                report.Remarks = remarks;
-                _context.SaveChanges();
-            }
-
-
-            return RedirectToAction("AdminReports");
-        }
-        [HttpPost]
-        public IActionResult UpdateDriver(int reportId, int assignedDriverId)
-        {
-            var report = _context.Reports.FirstOrDefault(r => r.Id == reportId);
-            if (report != null)
-            {
                 report.AssignedDriverId = assignedDriverId;
+                report.Remarks = remarks;
                 _context.SaveChanges();
             }
 
