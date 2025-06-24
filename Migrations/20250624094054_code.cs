@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Trash_Track.Migrations
 {
     /// <inheritdoc />
-    public partial class overrideup : Migration
+    public partial class code : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -55,20 +55,6 @@ namespace Trash_Track.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Drivers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Contact = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Drivers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -192,6 +178,27 @@ namespace Trash_Track.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Drivers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Contact = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Drivers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Drivers_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PickupOverrides",
                 columns: table => new
                 {
@@ -281,16 +288,71 @@ namespace Trash_Track.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "DriverPickupStatuses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DriverId = table.Column<int>(type: "int", nullable: false),
+                    ScheduleId = table.Column<int>(type: "int", nullable: false),
+                    CompletedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DriverPickupStatuses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DriverPickupStatuses_Drivers_DriverId",
+                        column: x => x.DriverId,
+                        principalTable: "Drivers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DriverPickupStatuses_PickupSchedules_ScheduleId",
+                        column: x => x.ScheduleId,
+                        principalTable: "PickupSchedules",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ReportPickupStatuses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ReportId = table.Column<int>(type: "int", nullable: false),
+                    DriverId = table.Column<int>(type: "int", nullable: false),
+                    IsPickedUp = table.Column<bool>(type: "bit", nullable: false),
+                    PickupTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReportPickupStatuses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ReportPickupStatuses_Drivers_DriverId",
+                        column: x => x.DriverId,
+                        principalTable: "Drivers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ReportPickupStatuses_Reports_ReportId",
+                        column: x => x.ReportId,
+                        principalTable: "Reports",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Drivers",
-                columns: new[] { "Id", "Contact", "Name" },
+                columns: new[] { "Id", "Contact", "Name", "Status", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "9801000001", "Ram Bahadur" },
-                    { 2, "9801000002", "Shyam Lal" },
-                    { 3, "9801000003", "Sita Thapa" },
-                    { 4, "9801000004", "Gopal Basnet" },
-                    { 5, "9801000005", "Nisha Shrestha" }
+                    { 1, "9801000001", "Ram Bahadur", "Active", null },
+                    { 2, "9801000002", "Shyam Lal", "Active", null },
+                    { 3, "9801000003", "Sita Thapa", "Active", null },
+                    { 4, "9801000004", "Gopal Basnet", "Active", null },
+                    { 5, "9801000005", "Nisha Shrestha", "Active", null }
                 });
 
             migrationBuilder.InsertData(
@@ -411,6 +473,21 @@ namespace Trash_Track.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DriverPickupStatuses_DriverId",
+                table: "DriverPickupStatuses",
+                column: "DriverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DriverPickupStatuses_ScheduleId",
+                table: "DriverPickupStatuses",
+                column: "ScheduleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Drivers_UserId",
+                table: "Drivers",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PickupOverrides_DriverId",
                 table: "PickupOverrides",
                 column: "DriverId");
@@ -430,6 +507,16 @@ namespace Trash_Track.Migrations
                 table: "PickupSchedules",
                 column: "WardId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReportPickupStatuses_DriverId",
+                table: "ReportPickupStatuses",
+                column: "DriverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReportPickupStatuses_ReportId",
+                table: "ReportPickupStatuses",
+                column: "ReportId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reports_AssignedDriverId",
@@ -461,7 +548,16 @@ namespace Trash_Track.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "DriverPickupStatuses");
+
+            migrationBuilder.DropTable(
                 name: "PickupOverrides");
+
+            migrationBuilder.DropTable(
+                name: "ReportPickupStatuses");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "PickupSchedules");
@@ -470,16 +566,13 @@ namespace Trash_Track.Migrations
                 name: "Reports");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Drivers");
 
             migrationBuilder.DropTable(
                 name: "Wards");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

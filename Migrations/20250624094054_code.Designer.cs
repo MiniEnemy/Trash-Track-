@@ -12,8 +12,8 @@ using Trash_Track.Models;
 namespace Trash_Track.Migrations
 {
     [DbContext(typeof(TrashDBContext))]
-    [Migration("20250624083512_overrideup")]
-    partial class overrideup
+    [Migration("20250624094054_code")]
+    partial class code
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -248,7 +248,16 @@ namespace Trash_Track.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Drivers");
 
@@ -257,31 +266,36 @@ namespace Trash_Track.Migrations
                         {
                             Id = 1,
                             Contact = "9801000001",
-                            Name = "Ram Bahadur"
+                            Name = "Ram Bahadur",
+                            Status = "Active"
                         },
                         new
                         {
                             Id = 2,
                             Contact = "9801000002",
-                            Name = "Shyam Lal"
+                            Name = "Shyam Lal",
+                            Status = "Active"
                         },
                         new
                         {
                             Id = 3,
                             Contact = "9801000003",
-                            Name = "Sita Thapa"
+                            Name = "Sita Thapa",
+                            Status = "Active"
                         },
                         new
                         {
                             Id = 4,
                             Contact = "9801000004",
-                            Name = "Gopal Basnet"
+                            Name = "Gopal Basnet",
+                            Status = "Active"
                         },
                         new
                         {
                             Id = 5,
                             Contact = "9801000005",
-                            Name = "Nisha Shrestha"
+                            Name = "Nisha Shrestha",
+                            Status = "Active"
                         });
                 });
 
@@ -631,6 +645,61 @@ namespace Trash_Track.Migrations
                     b.ToTable("Reports");
                 });
 
+            modelBuilder.Entity("Trash_Track.Models.ReportPickupStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("DriverId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsPickedUp")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("PickupTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ReportId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DriverId");
+
+                    b.HasIndex("ReportId");
+
+                    b.ToTable("ReportPickupStatuses");
+                });
+
+            modelBuilder.Entity("Trash_Track.Models.Trash_Track.Models.DriverPickupStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CompletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DriverId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ScheduleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DriverId");
+
+                    b.HasIndex("ScheduleId");
+
+                    b.ToTable("DriverPickupStatuses");
+                });
+
             modelBuilder.Entity("Trash_Track.Models.Ward", b =>
                 {
                     b.Property<int>("Id")
@@ -920,6 +989,15 @@ namespace Trash_Track.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Trash_Track.Models.Driver", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Trash_Track.Models.PickupOverride", b =>
                 {
                     b.HasOne("Trash_Track.Models.Driver", "Driver")
@@ -940,7 +1018,7 @@ namespace Trash_Track.Migrations
             modelBuilder.Entity("Trash_Track.Models.PickupSchedule", b =>
                 {
                     b.HasOne("Trash_Track.Models.Driver", "Driver")
-                        .WithMany()
+                        .WithMany("AssignedPickupSchedules")
                         .HasForeignKey("DriverId");
 
                     b.HasOne("Trash_Track.Models.Ward", "Ward")
@@ -971,8 +1049,48 @@ namespace Trash_Track.Migrations
                     b.Navigation("Ward");
                 });
 
+            modelBuilder.Entity("Trash_Track.Models.ReportPickupStatus", b =>
+                {
+                    b.HasOne("Trash_Track.Models.Driver", "Driver")
+                        .WithMany()
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Trash_Track.Models.Report", "Report")
+                        .WithMany()
+                        .HasForeignKey("ReportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Driver");
+
+                    b.Navigation("Report");
+                });
+
+            modelBuilder.Entity("Trash_Track.Models.Trash_Track.Models.DriverPickupStatus", b =>
+                {
+                    b.HasOne("Trash_Track.Models.Driver", "Driver")
+                        .WithMany()
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Trash_Track.Models.PickupSchedule", "Schedule")
+                        .WithMany()
+                        .HasForeignKey("ScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Driver");
+
+                    b.Navigation("Schedule");
+                });
+
             modelBuilder.Entity("Trash_Track.Models.Driver", b =>
                 {
+                    b.Navigation("AssignedPickupSchedules");
+
                     b.Navigation("AssignedReports");
                 });
 
