@@ -20,9 +20,12 @@ body {
 }
 
 h5 {
-    color: white;
+    color: black;
 }
 
+.white{
+    color:white;
+}
 h1, h2, h3, h4, h5, .brand {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
