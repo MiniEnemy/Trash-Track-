@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using Trash_Track.Models;
 using Trash_Track.Models.ViewModels;
+
 namespace Trash_Track.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private readonly TrashDBContext _context;
@@ -16,12 +16,14 @@ namespace Trash_Track.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserController(TrashDBContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public UserController(TrashDBContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
             _userManager = userManager;
+            _signInManager = signInManager;
             _roleManager = roleManager;
         }
+
         public async Task<IActionResult> Index()
         {
             var userId = _userManager.GetUserId(User);
@@ -31,7 +33,9 @@ namespace Trash_Track.Controllers
 
             foreach (var user in users)
             {
-                var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+                var identityUser = await _userManager.FindByIdAsync(user.Id);
+                var role = identityUser != null ? (await _userManager.GetRolesAsync(identityUser)).FirstOrDefault() : null;
+
                 viewModels.Add(new UserViewModel
                 {
                     Id = user.Id,
@@ -48,6 +52,7 @@ namespace Trash_Track.Controllers
             }
             return View(viewModels);
         }
+
         // POST: /User/Lock
         [HttpPost]
         public async Task<IActionResult> Lock(string id)
@@ -55,11 +60,12 @@ namespace Trash_Track.Controllers
             var user = await _userManager.FindByIdAsync(id);
             if (user != null)
             {
-                user.LockoutEnd = DateTime.UtcNow.AddYears(100); 
+                user.LockoutEnd = DateTime.UtcNow.AddYears(100);
                 await _userManager.UpdateAsync(user);
             }
             return RedirectToAction("Index");
         }
+
         [HttpPost]
         public async Task<IActionResult> Unlock(string id)
         {
@@ -71,6 +77,7 @@ namespace Trash_Track.Controllers
             }
             return RedirectToAction("Index");
         }
+
         [HttpPost]
         public async Task<IActionResult> ChangeRole(string userId, string newRole)
         {
@@ -87,5 +94,98 @@ namespace Trash_Track.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task<IActionResult> Profile()
+        {
+            var userId = _userManager.GetUserId(User);
+            var user = await _context.ApplicationUsers.FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user == null) return NotFound();
+
+            var vm = new UserProfileViewModel
+            {
+                Id = user.Id,
+                Email = user.Email,
+                FullName = user.FullName,
+                Address = user.Address,
+                ContactNumber = user.ContactNumber,
+                WardNumber = user.WardNumber
+            };
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Profile(UserProfileViewModel vm)
+        {
+            if (string.IsNullOrWhiteSpace(vm.Email) ||
+                string.IsNullOrWhiteSpace(vm.FullName) ||
+                string.IsNullOrWhiteSpace(vm.Address) ||
+                string.IsNullOrWhiteSpace(vm.ContactNumber))
+            {
+                TempData["error"] = "All profile fields are required.";
+                return View(vm);
+            }
+
+            var user = await _context.ApplicationUsers.FirstOrDefaultAsync(u => u.Id == vm.Id);
+            if (user == null)
+            {
+                TempData["error"] = "User not found.";
+                return RedirectToAction("Profile");
+            }
+
+            // Check if password change is requested
+            bool passwordChangeRequested = !string.IsNullOrWhiteSpace(vm.CurrentPassword) ||
+                                         !string.IsNullOrWhiteSpace(vm.NewPassword) ||
+                                         !string.IsNullOrWhiteSpace(vm.ConfirmPassword);
+
+            // Only process password change if requested
+            if (passwordChangeRequested)
+            {
+                // Validate that all password fields are provided
+                if (string.IsNullOrWhiteSpace(vm.CurrentPassword) ||
+                    string.IsNullOrWhiteSpace(vm.NewPassword) ||
+                    string.IsNullOrWhiteSpace(vm.ConfirmPassword))
+                {
+                    TempData["error"] = "All password fields are required to change password.";
+                    return View(vm);
+                }
+
+                // Server-side validation for password requirements
+                if (!ModelState.IsValid)
+                {
+                    return View(vm);
+                }
+
+                var identityUser = await _userManager.FindByIdAsync(vm.Id);
+                if (identityUser == null)
+                {
+                    TempData["error"] = "Identity user not found.";
+                    return View(vm);
+                }
+
+                var pwdResult = await _userManager.ChangePasswordAsync(
+                    identityUser,
+                    vm.CurrentPassword,
+                    vm.NewPassword
+                );
+
+                if (!pwdResult.Succeeded)
+                {
+                    var errors = string.Join(", ", pwdResult.Errors.Select(e => e.Description));
+                    TempData["error"] = "Password change failed: " + errors;
+                    return View(vm);
+                }
+
+                await _signInManager.RefreshSignInAsync(identityUser);
+                TempData["success"] = "Password updated successfully!";
+            }
+            else
+            {
+                TempData["success"] = "Profile information confirmed.";
+            }
+
+            return RedirectToAction("Profile");
+        }
     }
 }
