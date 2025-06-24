@@ -1,0 +1,33 @@
+﻿@model List<PickupScheduleViewModel>
+@{
+    ViewData["Title"] = "Pickup Checklist";
+}
+
+<h2>Today's Scheduled Pickups</h2>
+<form method="post" asp-action="UpdatePickupCompletion">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Ward</th>
+                <th>Pickup Time</th>
+                <th>Completed</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>Ward @item.WardNumber</td>
+                    <td>@item.PickupTime.ToString(@"hh\:mm")</td>
+                    <td>
+                        <input type="hidden" name="scheduleIds" value="@item.ScheduleId" />
+                        <input type="checkbox" name="completedScheduleIds" value="@item.ScheduleId" @(item.IsCompleted ? "checked" : "") />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-success">Submit</button>
+</form>
+
