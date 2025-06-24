@@ -151,47 +151,21 @@
                             <h4 class="mb-0"><i class="bi bi-calendar3 me-2"></i>Collection Schedule</h4>
                             <div class="mt-2 mt-md-0">
                                 <div class="input-group">
-                                    <label class="input-group-text bg-white text-dark border-0" for="wardSelect"><i class="bi bi-geo-alt"></i></label>
+                                    <label class="input-group-text bg-white text-dark border-0" for="wardSelect">
+                                        <i class="bi bi-geo-alt"></i>
+                                    </label>
                                     <select class="form-select border-0" id="wardSelect">
                                         <option value="" selected disabled>Choose your ward</option>
-                                        <option value="1">Ward 1 - Dilli Bazaar</option>
-                                        <option value="2">Ward 2 - Gyaneshwor</option>
-                                        <option value="3">Ward 3 - Gaushala</option>
-                                        <option value="4">Ward 4 - Sinamangal</option>
-                                        <option value="5">Ward 5 - Koteshwor</option>
-                                        <option value="6">Ward 6 - Tinkune</option>
-                                        <option value="7">Ward 7 - Baneshwor</option>
-                                        <option value="8">Ward 8 - Minbhawan</option>
-                                        <option value="9">Ward 9 - Maitidevi</option>
-                                        <option value="10">Ward 10 - Anamnagar</option>
-                                        <option value="11">Ward 11 - Bhimsengola</option>
-                                        <option value="12">Ward 12 - Shankhamul</option>
-                                        <option value="13">Ward 13 - Kalopul</option>
-                                        <option value="14">Ward 14 - Chabahil</option>
-                                        <option value="15">Ward 15 - Mitrapark</option>
-                                        <option value="16">Ward 16 - Bouddha</option>
-                                        <option value="17">Ward 17 - Jorpati</option>
-                                        <option value="18">Ward 18 - Gokarna</option>
-                                        <option value="19">Ward 19 - Kapan</option>
-                                        <option value="20">Ward 20 - Baluwatar</option>
-                                        <option value="21">Ward 21 - Lazimpat</option>
-                                        <option value="22">Ward 22 - Lainchaur</option>
-                                        <option value="23">Ward 23 - Naxal</option>
-                                        <option value="24">Ward 24 - Thamel</option>
-                                        <option value="25">Ward 25 - Kamaladi</option>
-                                        <option value="26">Ward 26 - Durbar Marg</option>
-                                        <option value="27">Ward 27 - New Road</option>
-                                        <option value="28">Ward 28 - Ason</option>
-                                        <option value="29">Ward 29 - Indra Chowk</option>
-                                        <option value="30">Ward 30 - Teku</option>
-                                        <option value="31">Ward 31 - Kalimati</option>
-                                        <option value="32">Ward 32 - Swayambhu</option>
+                                        @foreach (var ward in ViewBag.Wards as List<SelectListItem>)
+                                        {
+                                            <option value="@ward.Value">@ward.Text</option>
+                                        }
                                     </select>
-
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <div class="p-4">
                         <div class="row" id="scheduleDisplay">
                             <div class="col-12 text-center py-5">
@@ -266,6 +240,79 @@
         </div>
     </div>
 </section>
+@section Scripts {
+    <script>
+               $(document).ready(function () {
+            $('#wardSelect').on('change', function () {
+                const wardId = $(this).val();
+                if (!wardId) return;
+
+                // Show loading state
+                $('#scheduleDisplay').html(`
+                    <div class="col-12 text-center py-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Loading schedule...</p>
+                    </div>
+                `);
+
+                $.ajax({
+                    url: '/Home/GetWardSchedule',
+                    type: 'GET',
+                    data: { wardId },
+                    success: function (data) {
+                        if (data.error) {
+                            $('#scheduleDisplay').html(`
+                                <div class="col-12">
+                                    <div class="alert alert-danger">
+                                        <h5>Error</h5>
+                                        <p>${data.error}</p>
+                                    </div>
+                                </div>
+                            `);
+                            return;
+                        }
+
+                        let html = '';
+                        if (data.isOverrideToday) {
+                            html = `
+                                <div class="col-12">
+                                    <div class="alert ${data.isCancelled ? 'alert-danger' : 'alert-info'}">
+                                        <h5><strong>${data.isCancelled ? 'Collection Cancelled' : 'Override Schedule'}</strong></h5>
+                                        <p><strong>Day:</strong> ${data.overrideDay || 'Not specified'}</p>
+                                        <p><strong>Time:</strong> ${data.overrideTime || 'Not specified'}</p>
+                                        ${data.overrideMessage ? `<p><strong>Note:</strong> ${data.overrideMessage}</p>` : ''}
+                                    </div>
+                                </div>`;
+                        } else {
+                            html = `
+                                <div class="col-12">
+                                    <div class="alert alert-success">
+                                        <h5><strong>Regular Schedule</strong></h5>
+                                        <p><strong>Day:</strong> ${data.regularDay || 'Not scheduled'}</p>
+                                        <p><strong>Time:</strong> ${data.regularTime || 'Not scheduled'}</p>
+                                    </div>
+                                </div>`;
+                        }
+                        $('#scheduleDisplay').html(html);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('AJAX Error:', error);
+                        $('#scheduleDisplay').html(`
+                            <div class="col-12">
+                                <div class="alert alert-danger">
+                                    <h5>Unable to load schedule</h5>
+                                    <p>Please try again later. If the problem persists, contact support.</p>
+                                </div>
+                            </div>
+                        `);
+                    }
+                });
+            });
+        });
+    </script>
+}
 
 
 
