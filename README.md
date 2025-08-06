@@ -9,7 +9,7 @@
 
 ## 📽️ Live Demo & Page Breakdown
 
-🔗 [Watch the Full Demo & Feature Breakdown on LinkedIn](https://www.linkedin.com/in/jatin-bansal/) *(Replace with your actual post URL)*
+🔗 [Watch the Full Demo & Feature Breakdown on LinkedIn]([https://www.linkedin.com/in/jatin-bansal/](https://www.linkedin.com/posts/jatinbansal01_hackathon-smartnepal-trashtrack-activity-7358476942678835200-sfpE?utm_source=share&utm_medium=member_desktop&rcm=ACoAADMWenwBw5pweiAN08ERfc4JOweS9WT2Zew)
 
 ---
 
@@ -92,3 +92,4 @@ cd Trash-Track
 open with Visual Studio
 update your connection string in appsettings.json
 run the app using IIS Express or Kestrel
+
